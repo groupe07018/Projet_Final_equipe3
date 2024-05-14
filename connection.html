@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Connexion - Gestion de Travail</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <img src="images.jpeg" alt="Logo Entreprise" id="logo">
+        
+    </header>
+    <main class="login-container">
+        <form method="post" class="login-form">
+            <label for="username">Nom d'utilisateur:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">Mot de passe:</label>
+            <input type="password" id="password" name="password" required>
+
+            <div>
+                <input type="radio" id="entrepreneur" name="role" value="entrepreneur" required>
+                <label for="entrepreneur">Entrepreneur</label>
+                <input type="radio" id="employe" name="role" value="employe" required>
+                <label for="employe">Employé</label>
+            </div>
+
+            <button type="submit">Connexion</button>
+        </form>
+    </main>
+    <footer>
+        <p>Contactez-nous à contact@notreentreprise.com</p>
+    </footer>
+</body>
+</html>
+
