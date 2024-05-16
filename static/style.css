@@ -1,1 +1,54 @@
+body{
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+  }
+.contenu{
+    width: 80%;
+    margin:auto;
+}
 
+.logo{
+    width:100px;
+    margin-left: 20px;
+    display:block;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    width: 85%;
+    margin:auto;
+    padding: 10px;
+}
+
+.grid-item-gauche {
+    grid-column: 1;
+    padding: 10px;
+    text-align: center;
+} 
+.grid-item-centrer {
+    grid-column: 2;
+    padding: 10px;
+    text-align: center;
+  } 
+
+.grid-item-droite {
+    grid-column: 3;
+    padding: 10px;
+    text-align: center;
+}  
+
+/*bouton pour accepter*/
+.btn-primary{
+    background-color: #5EAAA8;
+    border: 1px solid black;
+}
+.btn-primary:hover{
+    background-color: #A3D2CA;
+    border: 1px solid black;
+}
+
+/* bouton pour annuler*/
+.btn-danger{
+    background-color: #DB6400;
+    border: 1px solid black;
+}
