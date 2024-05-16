@@ -1,6 +1,9 @@
 const express = require('express');
 const {engine} = require('express-handlebars');
 
+// comme ça la BD sera accessible dans tous les routeurs 
+const db = require("./db")
+
 const app = express();
 
 app.engine('handlebars', engine());
@@ -8,11 +11,10 @@ app.set('view engine', 'handlebars');
 app.set('views', './views');
 
 app.use(express.static("static"));
+app.use(express.urlencoded({extended: true}));
 
-const { createClient } = require("@libsql/client");
-const db = createClient({
-    url:"file:bd_projet.db"
-});
+const routerFacture = require('./routerFacture');
+app.use('/', routerFacture);
 
 app.get('/', function(req, res){
     res.render("index")
