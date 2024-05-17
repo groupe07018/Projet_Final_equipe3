@@ -1,2 +1,83 @@
 {{!-- facture faite selon les données de la BD quand un chantier est terminé. Prévoir ensuite pouvoir archiver ce chantier 
 pour le supprimer de la liste des chantiers en cours --}}
+<div class="grid-container">
+    <div class="grid-item-1">
+        <h1>Facture</h1>
+        No facture {{id_chantier}}<br>
+        <span class="sousTexte">
+            Date: <br>
+            Échéance <br><br>
+        </span>
+    </div>
+    <div class="grid-item-3">
+        <p class="coordonneesNom">
+        <strong>Céramique David Laroche</strong><br>
+        3012 Anctil, St-Denis-deBrompton, QC<br>
+        819-222-2222<br>
+        <span class="sousTexte">
+        TPS: 33333333444 TVQ: 333333444444<br>
+        RBQ: 22222222222</span>
+        </p>
+    </div>
+    <div class="grid-item-4">
+        Facturé à: <br>
+        {{client}} (infos du client)<br>
+    </div>
+    <div class="grid-item-6">
+        Travaux effectués au: <br>
+        {{chantier}} (infos du chantier)
+    </div>
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr class="table-secondary">
+            <th>Description</th>
+            <th>Quantité</th>
+            <th>Taux</th>
+            <th>Total</th>
+        </tr>
+        <tr>
+            <td>(Nombre heures){{heures}}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+                <tr>
+            <td>(Nombre heures){{heures}}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td>Sous-total</td>
+            <td>$</td>
+        </tr>
+                <tr>
+            <td></td>
+            <td></td>
+            <td>TPS</td>
+            <td>$</td>
+        </tr>
+                <tr>
+            <td></td>
+            <td></td>
+            <td>TVQ</td>
+            <td>$</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td>Total</td>
+            <td>$</td>
+        </tr> 
+    </thead>
+</table>
+
+<div class="grid-container">
+    <div class="grid-item-6">
+        <button type="button" class="btn btn-primary">Envoyer</button>  <button type="button" class="btn btn-danger">Imprimer</button>
+    </div>
+</div>
