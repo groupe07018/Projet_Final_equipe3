@@ -21,7 +21,7 @@ const routerEmploye = require("./routerEmploye");
 app.use("/", routerEmploye);
 
 app.get('/', function(req, res){
-    res.render("index")
+    res.render("employe")
 })
 
 app.listen(3000, function(){
