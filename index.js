@@ -1,5 +1,6 @@
 const express = require('express');
 const {engine} = require('express-handlebars');
+const db = require("./db")
 
 const app = express();
 
@@ -9,13 +10,12 @@ app.set('views', './views');
 
 app.use(express.static("static"));
 
-const { createClient } = require("@libsql/client");
-const db = createClient({
-    url:"file:bd_projet.db"
-});
+const routerEmploye = require("./routerEmploye");
+
+app.use("/", routerEmploye);
 
 app.get('/', function(req, res){
-    res.render("index")
+    res.render("employe")
 })
 
 app.listen(3000, function(){
