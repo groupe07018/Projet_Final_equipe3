@@ -1,0 +1,38 @@
+{{!-- interface du patron --}}
+
+<h1>TABLEAU DE BORD EMPLOYEUR</h1>
+<h2>Bienvenue, {{login}}!</h2>
+<div class="button-container">
+    <button onclick="location.href='/liste-employes'">Liste des employés</button>
+    <button onclick="location.href='/nouvel-employe'">Nouvel employé</button>
+    <button onclick="location.href='/liste-contracteurs'">Liste des contracteurs</button>
+    <button onclick="location.href='/nouveau-contracteur'">Nouveau contracteur</button>
+    <button onclick="location.href='/chantiers-en-cours'">Liste des chantiers en cours</button>
+</div>
+
+ <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        .button-container {
+            margin-top: 20px;
+        }
+        .button-container button {
+            margin: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #007BFF;
+            color: white;
+            transition: background-color 0.3s;
+        }
+        .button-container button:hover {
+            background-color: #0056b3;
+        }
+    </style>
