@@ -3,7 +3,7 @@ const {engine} = require('express-handlebars');
 const bodyParser = require('body-parser');
 const db = require("./db")
 const ajoutEmploye = require('./ajoutEmploye');
-
+const routerchantier = require('./routerchantier');
 const app = express();
 
 app.engine('handlebars', engine());
@@ -15,13 +15,17 @@ app.use(express.static("static"));
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/', ajoutEmploye); 
+//pour dire utiliser routerchantier.js
+//app.use ("/", routerchantier);
+
+const routerFacture = require("./routerFacture");
+app.use('/', routerFacture);
+
 
 app.get('/', function(req, res){
     res.render("index")
 })
 
-const routerFacture = require("./routerFacture");
-app.use("/", routerFacture);
 
 app.post('/login', async (req, res) => {
     const login = req.body.userLogin;

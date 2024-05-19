@@ -1,1 +1,13 @@
 {{!-- liste des chantiers en cours --}}
+
+
+<h1>Liste des chantiers</h1>
+<ul>
+    {{#each chantiers}}
+        <li>
+            <a href="/chantier/sommaire/{{this.id}}">{{this.adresse}}</a>
+        </li>
+    {{/each}}
+</ul>
+
+
