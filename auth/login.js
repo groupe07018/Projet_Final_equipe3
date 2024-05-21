@@ -6,43 +6,50 @@ const { createSession, addInfo } = require("../sessions");
 const router = express.Router();
 
 router.get("/", async (req,res) => {
-    const id = req.body.id;
-    const pasword = req.body.mot_passe;
-    if (!id || !password) {
+    res.render("index");
+});
+
+router.post("/", async (req,res) => {
+    // Avoir les informations du formulaire
+    const login = req.body.login;
+    const password = req.body.mot_de_passe;
+    if (!login || !password) {
         res.redirect(400, ".");
         return;
     }
 
+    // Vérifier que l'utilisateur existe
     const result = await db.execute({
-        sql: "SELECT * utilisateur WHERE id = :id",
-        args: {id},
+        sql: "SELECT 1 FROM utilisateur WHERE login = :login",  // est-ce que le 1 est une erreur    + est-ce que mes noms sont inversés
+        args: {login},    //est-ce le nom de la base de donnée ou...
     });
 
     if (result.rows.length === 0) {
-        res.send("id ou mot de passe invalide");
+        res.send("login ou mot de passe invalide");
         return;
     };
 
+    // Hacher le mot de passe du formulaire avec le salt de l'utilisateur
     const user = (result.rows[0]);
-    const hashedPass = scyptSync(
+    const hashedPass = scryptSync(
         password,
         user.salt,
-        64
+        64,
     );
 
     const correct = timingSafeEqual(
         hashedPass,
-        user.password
+        user.password,
     );
 
     if(correct) {
-        addInfo(await createSession(res), {id: id});
+        addInfo(await createSession(res), {user: login});  //est-ce que je suis encore à l'envers?? user/login
     }
     else {
-        res.send("id ou mot de passe invalide");
+        res.send("login ou mot de passe invalide");
         return;
     }
-    res.redirect("/");
+    res.redirect("employe");
 });
 
 module.exports = router;

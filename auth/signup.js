@@ -7,40 +7,47 @@ const { creteSession, addInfo } = require("../sessions");
 const router = express.Router();
 
 router.get ("/", (req,res) => {
-    res.render("signup");   //à changer
+    res.render("index");   
 });
 
 router.post("/", async function(req,res) {
-    const id = req.body.id;
-    const password = req.body.mot_passe;
-    if (!id || !password) {
+    // Aller chercher les informations du formulaire
+    const login = req.body.login;
+    const password = req.body.mot_de_passe;
+    if (!login || !password) {
         res.redirect(400,"."); //à questionner "."
         return;
     }
 
+    // Valider que l'utilisateur n'existe pas déjà
     const result = await db.execute({
-        sql:"SELECT 1 FROM utilisateur WHERE id = :id",
-        args: {id},
+        sql:"SELECT 1 FROM utilisateur WHERE login = :login",   // est-ce que le 1 est une erreur
+        args: {login},
     });
 
     if(result.rows.length > 0) {
-        res.send("Ce id est déjà utilisé");
+        res.send("Ce login est déjà utilisé");
         return;
     }
 
+    // Créer le salt et hacher le mot de passe
     const salt = randomBytes(16).toString("hex");
-    const hasedPass = scryptSync(password, salt, 64);
+    const hashedPass = scryptSync(password, salt, 64);
 
+    // Ajouter l'utilisateur à la base de données
     db.execute({
-        sql: "INSERT INTO utilisateur (id, password, salt) VALUES (:id, :hashedPass, :salt",
+        sql: "INSERT INTO utilisateur (login, password, salt) VALUES (:login, :hashedPass, :salt",
         args: {
-            id,
+            login,
             hashedPass,
-            salt
-        }
+            salt,
+        },
     });
 
-    addInfo(await createSession(res), { id: id });
+    // Créer la session et lier à l'utilisateur
+    addInfo(await createSession(res), { login: login });
 
     res.redirect("/"); //à changer et vérifier pour des sessions différentes employés/patron
-})
+});
+
+module.exports = router;

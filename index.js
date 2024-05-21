@@ -16,23 +16,32 @@ app.use(express.static("static"));
 
 //app.use(bodyParser.urlencoded({ extended: false }));
 
+
+// Ajoute les middleware pour les formulaires et cookie
 app.use(express.urlencoded({extended: true }));
 app.use(cookieParser());
 
+// Middleware pour la gestion des sessions (sessions.js)
 app.use(session.middleware);
 
+// Routeurs pour les pages de signup et login
 app.use("/signup", require("./auth/signup"));
 app.use("/login", require("./auth/login"));
 
-/*app.get('/', function(req, res){
+app.get('/', function(req, res){
     res.render("index")
-})*/
+})
 
+/*
+Page principale
+Afficher le nom d'utilisateur de la session s'il existe.
+Sinon, rediriger vers la page index.
+*/
 app.get("/", function( req, res) {
-    if (req.session && req.session.id_utilisateur) {
-      res.send(req.session.id_utilisateur);
+    if (req.session && req.session.login) {
+      res.send(req.session.login);
     } else {
-      res.redirect("/login");
+      res.redirect("/index");
     }
   });
 /*
