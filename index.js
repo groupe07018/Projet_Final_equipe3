@@ -13,10 +13,14 @@ app.use(express.static("static"));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
+const routerFacture = require("./routerFacture");
+app.use("/", routerFacture);
+
 
 app.get('/', function(req, res){
     res.render("index")
 })
+
 
 
 
