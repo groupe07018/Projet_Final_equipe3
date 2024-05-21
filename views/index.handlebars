@@ -1,11 +1,16 @@
-{{!-- Martine, j'ai fait ça vite juste pour avoir du contenu à afficher pour faire un peu de CSS.
- Tu es libre de modifier le formulaire comme tu veux!! Efface ce commentaire quand tu l'as lu!--}}
-<div class="grid-item-centrer bordure">
-    <h1>Connexion</h1>
-    <form action="login" method="post">
-        <input type="text" name="userLogin" id="userLogin" placeholder="Nom d'utilisateur"><br><br>
-        <input type="password" name="MDP" id="MDP" placeholder="Mot de passe"><br><br>
-        <button type="submit" class="btn btn-primary">Connexion</button>
-        <button type="button" class="btn btn-danger">Annuler</button>{{!--sert à rien c'est juste pour voir le rendu visuel du bouton annuler--}}
-    </form>
-</div>
+<h1>Connection</h1>
+<form action="login" method="post">
+    <input type="text" name="userLogin" id="userLogin" placeholder="Entrez votre nom d'utilisateur ou votre adresse courriel"><br><br>
+    <input type="password" name="MDP" id="MDP" placeholder="Entrez votre mot de passe">
+    <button type="submit" onclick="validateForm()">Se connecter</button>
+</form>
+
+  <script>
+        function validateForm() {
+            const userLogin = document.getElementById('userLogin').value;
+            const MDP = document.getElementById('MDP').value;
+            if (!userLogin || !MDP) {
+                alert('Veuillez remplir tous les champs.');
+            }
+        }
+    </script>
