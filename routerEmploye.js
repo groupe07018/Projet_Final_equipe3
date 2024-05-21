@@ -7,15 +7,18 @@ const db = require("./db");
 const d = new Date();
 document.getElementById("date").innerHTML = d;*/
 
-router.get("/:id", async function (req,res) {
-    const employe = await db.execute({sql:"SELECT * FROM utilisateur WHERE id = :id",
-        args: {
-            nom: req.body.nom,
-            id: req.body.numero
-        }
+router.post("./employe", async function (req,res) {
+    const {rows} = await db.execute({sql:"SELECT adresse FROM chantier",
+        args: {adresse}
     })
-    console.log({employe: employe.rows[0]})
-    res.render("employe", {employe: employe.rows[0]});
+    res.render("employe", {rows})
+})
+
+router.get("/afficher", async function (req,res) {
+    const {rows} = await db.execute({sql:"SELECT * FROM utilisateur WHERE id = :id",
+        args: {id}
+    })
+    res.render("afficher", rows[0]);
 })
 
 module.exports = router;
