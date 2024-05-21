@@ -1,7 +1,10 @@
 const express = require('express');
 const {engine} = require('express-handlebars');
-const bodyParser = require('body-parser');
-const db = require("./db")
+const cookieParser = require("cookie-parser");
+const session = require("./sessions");
+//const bodyParser = require('body-parser');
+
+const db = require("./db");
 
 const app = express();
 
@@ -11,15 +14,28 @@ app.set('views', './views');
 
 app.use(express.static("static"));
 
-app.use(bodyParser.urlencoded({ extended: false }));
+//app.use(bodyParser.urlencoded({ extended: false }));
 
+app.use(express.urlencoded({extended: true }));
+app.use(cookieParser());
 
-app.get('/', function(req, res){
+app.use(session.middleware);
+
+app.use("/signup", require("./auth/signup"));
+app.use("/login", require("./auth/login"));
+
+/*app.get('/', function(req, res){
     res.render("index")
-})
+})*/
 
-
-
+app.get("/", function( req, res) {
+    if (req.session && req.session.id_utilisateur) {
+      res.send(req.session.id_utilisateur);
+    } else {
+      res.redirect("/login");
+    }
+  });
+/*
 app.post('/login', async (req, res) => {
     const login = req.body.userLogin;
     const mdp = req.body.MDP;
@@ -155,7 +171,7 @@ app.post('/nouveau-contracteur', async (req, res) => {
 app.get('/chantiers-en-cours', (req, res) => {
 
     res.render('listeChantier'); 
-});
+});*/
 
 
 

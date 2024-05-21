@@ -9,8 +9,18 @@
         <select name="menu_deroulant">
             <option value="">Sélectionnez un chantier</option>
             {{#each chantier}}
-                <option value="{{this.adresse}}">{{this.adresse}}</option>
+                <li><option value="{{this.adresse}}">{{this.adresse}}</option></li>
             {{/each}}
         </select>
+    </div><br><br>
+    <div class="grid-item-gauche" id="entree">
+        <button class="btn btn-success" type="submit" onclick="heureEntree()">Entrer au travail</button></div>
+    <div class="grid-item-droite" id="in">
+       <input type="text" id="in" name="in" readonly> {{this.heure}}</div>
+    </div>
+    <div class="grid-item-gauche" id="sortie">
+        <button class="btn btn-danger" type="submit" onclick="heureSortie()">Sortir du travail</button></div>
+    <div class="grid-item-droite" id="out">
+       <input type="text" id="out" name="out" readonly> {{this.heure}}</div>
     </div>
 </div>
