@@ -26,7 +26,7 @@ app.use(session.middleware);
 
 // Routeurs pour les pages de signup et login
 app.use("/signup", require("./auth/signup"));
-app.use("/login", require("./auth/login"));
+//app.use("/login", require("./auth/login"));
 
 app.get('/', function(req, res){
     res.render("index")

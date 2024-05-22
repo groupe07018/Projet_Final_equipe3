@@ -20,7 +20,7 @@ router.post("/", async (req,res) => {
 
     // Vérifier que l'utilisateur existe
     const result = await db.execute({
-        sql: "SELECT 1 FROM utilisateur WHERE login = :login",  // est-ce que le 1 est une erreur    + est-ce que mes noms sont inversés
+        sql: "SELECT * FROM utilisateur WHERE login = :login",  
         args: {login},    //est-ce le nom de la base de donnée ou...
     });
 

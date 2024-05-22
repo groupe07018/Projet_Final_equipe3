@@ -6,6 +6,8 @@ const { creteSession, addInfo } = require("../sessions");
 
 const router = express.Router();
 
+
+//à changer
 router.get ("/", (req,res) => {
     res.render("index");   
 });
