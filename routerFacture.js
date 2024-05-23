@@ -25,9 +25,9 @@ router.get('/facture', async function(req, res){
     res.render("facture", {frais_fixe:frais_fixe.rows})
 })
 
-router.get('/listeChantier', async function(req, res){// m'assurer que la page sommaire affiche bien les détails du chantier (adresse, et autres)
+router.get('/listeArchive', async function(req, res){// m'assurer que la page sommaire affiche bien les détails du chantier (adresse, et autres)
     const chantier = await db.execute("SELECT * FROM chantier WHERE statut = 'termine'")
-    res.render("listeChantier", {chantier:chantier.rows})
+    res.render("listeArchive", {chantier:chantier.rows})
 })
 
 router.get('/sommaireChantier', function(req, res){ // enlever cette route, elle devrait être dans routerChantier déjà
