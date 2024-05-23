@@ -37,22 +37,22 @@ pour le supprimer de la liste des chantiers en cours --}}
             <th>Quantité</th>{{!-- faire les calculs dans le fichier script.js, en appelant la function avec le input de quantité --}}
             <th>Total</th>
         </tr>
-        <tr>
-            <td><select name="menu_frais_fixe">
-                    <option value="">Choisir</option>
-                    {{#each frais_fixe}}
-                        <option value="{{this.nom_frais_fixe}}">{{this.nom_frais_fixe}} {{this.prix_frais_fixe}}$ / {{this.unite_frais_fixe}}</option>
-                    {{/each}}
-                </select> 
-            </td>
-            <td>aller chercher le prix dans la bd de ce qui aura été sélectionné</td>
-            <td><input class="caseQuantite" type="number" id="quantite" name="quantite" required placeholder="requis"></td>
-            <td></td>
-        </tr>
-                <tr>
+                        <tr>
             <td>(Nombre heures){{heures}}</td>
             <td></td>
             <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><select id="menu_frais_fixe" name="menu_frais_fixe">
+                    <option value="">Choisir</option>
+                    {{#each frais_fixe}}
+                        <option value="{{this.prix_frais_fixe}}">{{this.nom_frais_fixe}} {{this.prix_frais_fixe}}$ / {{this.unite_frais_fixe}}</option>
+                    {{/each}}
+                </select> 
+            </td>
+            <td><span id="prixFacture">ici</span></td>
+            <td><input class="caseQuantite" type="number" id="quantite" name="quantite" required="true" placeholder="requis"></td>
             <td></td>
         </tr>
         <tr>

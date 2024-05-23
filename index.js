@@ -32,6 +32,8 @@ app.get('/', function(req, res){
     res.render("index")
 })
 
+
+
 /*
 Page principale
 Afficher le nom d'utilisateur de la session s'il existe.
