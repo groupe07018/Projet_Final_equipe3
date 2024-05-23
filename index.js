@@ -1,5 +1,7 @@
 const express = require('express');
 const {engine} = require('express-handlebars');
+const chantierRouter = require("./chantiertouter");
+// comme ça la BD sera accessible dans tous les routeurs 
 const bodyParser = require('body-parser');
 const db = require("./db")
 
@@ -8,14 +10,13 @@ const app = express();
 app.engine('handlebars', engine());
 app.set('view engine', 'handlebars');
 app.set('views', './views');
-
+app.use('/chantier', chantierRouter);
 app.use(express.static("static"));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
-const routerFacture = require("./routerFacture");
-app.use("/", routerFacture);
-
+const routerFacture = require('./routerFacture');
+app.use('/', routerFacture);
 
 app.get('/', function(req, res){
     res.render("index")

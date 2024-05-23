@@ -1,2 +1,22 @@
 {{!-- formulaire d'ajout de client. Le client peut être un particulier directement ou un entrepreneur général
-C'est différent du formulaire d'ajout de chantier car un entrepreneur général pourrait avoir plusieurs chantiers --}}
+C'est différent du formulaire d'ajout de chantier car un entrepreneur général pourrait avoir plusieurs chantiers --}}<h1>Ajouter un nouveau client</h1>
+<h1>Ajouter un nouveau client</h1>
+<form action="/ajouteclient" method="POST">
+    <label for="nom">Nom:</label>
+    <input type="text" id="nom" name="nom" required>
+    <br>
+    <label for="courriel">Courriel:</label>
+    <input type="email" id="courriel" name="courriel" required>
+    <br>
+    <label for="adresse">Adresse:</label>
+    <input type="text" id="adresse" name="adresse" required>
+    <br>
+    <label for="ville">Ville:</label>
+    <select id="ville" name="ville" required>
+        {{#each villes}}
+            <option value="{{this.id}}">{{this.nom_ville}}</option>
+        {{/each}}
+    </select>
+    <br>
+    <button type="submit" class="btn-primary">Ajouter</button>
+</form>
