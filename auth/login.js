@@ -21,7 +21,7 @@ router.post("/", async (req,res) => {
     // Vérifier que l'utilisateur existe
     const result = await db.execute({
         sql: "SELECT * FROM utilisateur WHERE login = :login",  
-        args: {login},    //est-ce le nom de la base de donnée ou...
+        args: {login},    
     });
 
     if (result.rows.length === 0) {
