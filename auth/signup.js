@@ -9,7 +9,7 @@ const router = express.Router();
 
 //à changer
 router.get ("/", (req,res) => {
-    res.render("index");   
+    res.render("ajoutPremierUtilisateur");   
 });
 
 router.post("/", async function(req,res) {

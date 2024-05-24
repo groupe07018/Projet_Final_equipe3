@@ -26,11 +26,11 @@ app.use(session.middleware);
 
 // Routeurs pour les pages de signup et login
 app.use("/signup", require("./auth/signup"));
-//app.use("/login", require("./auth/login"));
+app.use("/login", require("./auth/login"));
 
 app.get('/', function(req, res){
     res.render("index")
-})
+});
 
 
 
@@ -39,13 +39,14 @@ Page principale
 Afficher le nom d'utilisateur de la session s'il existe.
 Sinon, rediriger vers la page index.
 */
+/*
 app.get("/", function( req, res) {
     if (req.session && req.session.login) {
       res.send(req.session.login);
     } else {
       res.redirect("/index");
     }
-  });
+  });*/
 /*
 app.post('/login', async (req, res) => {
     const login = req.body.userLogin;
@@ -74,7 +75,7 @@ app.post('/login', async (req, res) => {
         console.error('Database query error: ', err);
         res.status(500).send('Internal Server Error');
     }
-});
+});*/
 
 app.get('/liste-employes', async (req, res) => {
     try {
@@ -182,7 +183,7 @@ app.post('/nouveau-contracteur', async (req, res) => {
 app.get('/chantiers-en-cours', (req, res) => {
 
     res.render('listeChantier'); 
-});*/
+});
 
 
 
