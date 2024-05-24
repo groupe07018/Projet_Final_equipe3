@@ -29,45 +29,56 @@ pour le supprimer de la liste des chantiers en cours --}}
     </div>
 </div>
 
-<table class="table table-striped">
-    <thead>
+<table id="tableFacture" class="table table-striped">
+    
         <tr class="table-secondary">
             <th>Description</th>
             <th>Taux</th>
             <th>Quantité</th>{{!-- faire les calculs dans le fichier script.js, en appelant la function avec le input de quantité --}}
             <th>Total</th>
         </tr>
-                        <tr>
+        <tr>
+            <td><button type="button" class="btn btn-primary" onclick="ajoutLigne()">Ajouter un frais</button> </td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
             <td>(Nombre heures){{heures}}</td>
             <td></td>
             <td></td>
             <td></td>
         </tr>
         <tr>
-            <td><select id="menu_frais_fixe" name="menu_frais_fixe">
+            <td><select id="menu_frais_fixe" name="menu_frais_fixe" onchange="afficherPrix()">
                     <option value="">Choisir</option>
                     {{#each frais_fixe}}
                         <option value="{{this.prix_frais_fixe}}">{{this.nom_frais_fixe}} {{this.prix_frais_fixe}}$ / {{this.unite_frais_fixe}}</option>
                     {{/each}}
                 </select> 
             </td>
-            <td><span id="prixFacture">ici</span></td>
+            <td><span id="prixFacture"></span></td>
             <td><input class="caseQuantite" type="number" id="quantite" name="quantite" required="true" placeholder="requis"></td>
             <td></td>
         </tr>
+</table>
+<table id="tableTotal" class="table">
         <tr>
+            <td></td>
             <td></td>
             <td></td>
             <td>Sous-total</td>
             <td>$</td>
         </tr>
-                <tr>
+        <tr>
+            <td></td>
             <td></td>
             <td></td>
             <td>TPS</td>
             <td>$</td>
         </tr>
-                <tr>
+        <tr>
+            <td></td>
             <td></td>
             <td></td>
             <td>TVQ</td>
@@ -76,10 +87,10 @@ pour le supprimer de la liste des chantiers en cours --}}
         <tr>
             <td></td>
             <td></td>
+            <td></td>
             <td>Total</td>
             <td>$</td>
         </tr> 
-    </thead>
 </table>
 
 <div class="grid-container">
@@ -88,3 +99,34 @@ pour le supprimer de la liste des chantiers en cours --}}
         <button type="button" onclick="window.print()" class="btn btn-danger">Imprimer</button>
     </div>
 </div>
+
+<script>
+function afficherPrix(){
+    const itemAFacturer = document.querySelector("#menu_frais_fixe");
+    const prixFacture = document.querySelector("#prixFacture");
+    prixFacture.innerText = itemAFacturer.value
+}
+
+function ajoutLigne(){
+    console.log("allo")
+     var table=document.querySelector("#tableFacture");
+   
+    var row = table.insertRow(-1);
+    var cell1 = row.insertCell(0);
+    var cell2 = row.insertCell(1);
+    var cell3 = row.insertCell(2);
+    var cell4 = row.insertCell(3);
+
+    cell1.innerHTML = `<select id="menu_frais_fixe" name="menu_frais_fixe">
+                        <option value="">Choisir</option>
+                            {{#each frais_fixe}}
+                        <option value="{{this.prix_frais_fixe}}">{{this.nom_frais_fixe}} {{this.prix_frais_fixe}}$ / {{this.unite_frais_fixe}}</option>
+                            {{/each}}
+                        </select>`
+
+    cell2.innerHTML = "";
+    cell3.innerHTML = `<input class="caseQuantite" type="number" id="quantite" name="quantite" required="true" placeholder="requis">`;
+    cell4.innerHTML = "";
+
+}
+</script>
