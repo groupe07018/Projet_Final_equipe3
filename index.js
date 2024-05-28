@@ -2,6 +2,7 @@ const express = require('express');
 const {engine} = require('express-handlebars');
 const bodyParser = require('body-parser');
 const db = require("./db")
+const ajoutEmploye = require('./ajoutEmploye');
 
 const app = express();
 
@@ -13,14 +14,11 @@ app.use(express.static("static"));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
-const routerFacture = require("./routerFacture");
-app.use("/", routerFacture);
-
+app.use('/', ajoutEmploye); 
 
 app.get('/', function(req, res){
     res.render("index")
 })
-
 
 
 
@@ -56,7 +54,7 @@ app.post('/login', async (req, res) => {
 app.get('/liste-employes', async (req, res) => {
     try {
         const result = await db.execute({
-            sql: "SELECT * FROM employé"
+            sql: "SELECT * FROM utilisateur"
         });
 
         console.log('Query result:', result.rows);
@@ -75,30 +73,6 @@ app.get('/liste-employes', async (req, res) => {
 app.get('/nouvel-employe', (req, res) => {
 
     res.render('ajoutEmploye'); 
-});
-
-app.post('/nouvel-employe', async (req, res) => {
-    const nom = req.body.nom;
-
-    try {
-        const checkResult = await db.execute({
-            sql: "SELECT * FROM employé WHERE nom = ?",
-            args: [nom]
-        });
-
-        if (checkResult.rows.length > 0) {
-            res.send('<h2>Le nom existe déjà. Veuillez entrer un nom différent.</h2><a href="/nouvel-employe">Retour</a>');
-        } else {
-            await db.execute({
-                sql: "INSERT INTO employé (nom) VALUES (?)",
-                args: [nom]
-            });
-            res.redirect('/liste-employes');
-        }
-    } catch (err) {
-        console.error('Database query/insertion error: ', err);
-        res.status(500).send('Internal Server Error');
-    }
 });
 
 
