@@ -28,6 +28,9 @@ app.use(session.middleware);
 app.use("/signup", require("./auth/signup"));
 app.use("/login", require("./auth/login"));
 
+const routerEmploye = require("./routerEmploye");
+app.use ("/routerEmploye");
+
 app.get('/', function(req, res){
     res.render("index")
 });
