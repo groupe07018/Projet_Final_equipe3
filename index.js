@@ -6,6 +6,11 @@ const bodyParser = require('body-parser');
 const db = require("./db")
 
 const app = express();
+//const router = require("./routeurChantier");
+
+app.engine('handlebars', engine());
+app.set('view engine', 'handlebars');
+app.set('views', './views');
 
 app.engine('handlebars', engine());
 app.set('view engine', 'handlebars');
