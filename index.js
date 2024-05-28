@@ -23,7 +23,6 @@ app.get('/', function(req, res){
 const routerFacture = require("./routerFacture");
 app.use("/", routerFacture);
 
-
 app.post('/login', async (req, res) => {
     const login = req.body.userLogin;
     const mdp = req.body.MDP;
