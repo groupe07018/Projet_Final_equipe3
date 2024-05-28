@@ -1,35 +1,107 @@
-<h1>Ajouter un nouveau chantier</h1>
-<form action="/chantier/ajoute" method="POST">
-    <label for="adresse">Adresse:</label>
-    <input type="text" id="adresse" name="adresse" required>
-    <br>
-    <label for="ville">Ville:</label>
-    <select id="ville" name="ville" required>
-        {{#each villes}}
-            <option value="{{this.id}}">{{this.nom_ville}}</option>
-        {{/each}}
-    </select>
-    <br>
-    <label for="date_debut">Date de début:</label>
-    <input type="date" id="date_debut" name="date_debut" required>
-    <br>
-    <label for="date_fin">Date de fin:</label>
-    <input type="date" id="date_fin" name="date_fin">
-    <br>
-    <label for="contracteur">Contracteur:</label>
-    <select id="contracteur" name="contracteur" required>
-        {{#each contracteurs}}
-            <option value="{{this.id}}">{{this.nom_compagnie}}</option>
-        {{/each}}
-    </select>
-    <br>
-    <label for="employees">Employés disponibles:</label>
-    {{#each employees}}
-        <div>
-            <input type="checkbox" id="emp_{{this.id}}" name="employees" value="{{this.id}}">
-            <label for="emp_{{this.id}}">{{this.nom}}</label>
-        </div>
-    {{/each}}
-    <br>
-    <button type="submit" class="btn-primary">Ajouter</button>
-</form>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Ajouter un Nouveau Chantier</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .form-container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="date"],
+        select {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        a {
+            display: inline-block;
+            margin-top: 10px;
+            color: #007BFF;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Ajouter un Chantier</h1>
+        <form action="/ajoutchantier" method="POST">
+            <label for="adresse">Adresse</label>
+            <input type="text" id="adresse" name="adresse" required>
+            
+            <label for="ville">Ville</label>
+            <select id="ville" name="ville" required>
+                {{#each villes}}
+                    <option value="{{this.id}}">{{this.nom_ville}}</option>
+                {{/each}}
+            </select>
+            
+            <label for="date_debut">Date de Début</label>
+            <input type="date" id="date_debut" name="date_debut" required>
+            
+            <label for="date_fin">Date de Fin</label>
+            <input type="date" id="date_fin" name="date_fin" required>
+            
+            <label for="client">Client</label>
+            <select id="client" name="client" required>
+                {{#each clients}}
+                    <option value="{{this.id}}">{{this.nom}}</option>
+                {{/each}}
+            </select>
+            
+            <label for="employes">Employés disponibles:</label>
+            {{#each employes}}
+                <div>
+                    <input type="checkbox" id="emp_{{this.id}}" name="employes" value="{{this.id}}">
+                    <label for="emp_{{this.id}}">{{this.nom}}</label>
+                </div>
+            {{/each}}
+            
+            <button type="submit">Ajouter</button>
+        </form>
+        <a href="/chantiers-en-cours">Retour</a>
+    </div>
+</body>
+</html>
