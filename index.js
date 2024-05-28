@@ -20,6 +20,8 @@ app.get('/', function(req, res){
     res.render("index")
 })
 
+const routerFacture = require("./routerFacture");
+app.use("/", routerFacture);
 
 
 app.post('/login', async (req, res) => {

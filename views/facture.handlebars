@@ -21,12 +21,19 @@ pour le supprimer de la liste des chantiers en cours --}}
     </div>
     <div class="grid-item-4">
         Facturé à: <br>
-        {{client}} (infos du client)<br>
+            <select name="client" class="sansContour">
+                <option value="">Choisir</option>
+                    {{#each client}},
+                        <option class="sansContour" value="{{this.nom}}">{{this.nom_projet}} <br>
+                        {{this.adresse}}<br>
+                        {{this.id_ville}}, {{this.code_postal}}</option>
+                    {{/each}}
+            </select> 
     </div>
     <div class="grid-item-6">
         Chantier à facturer<br>
 
-        <select name="chantierActif" class="sansContour">
+        <select name="menu_chantierActif" class="sansContour" onclick="afficherChantier(this)">
                 <option value="">Choisir</option>
                     {{#each chantierActif}},
                         <option class="sansContour" value="{{this.nom}}">{{this.nom_projet}} <br>
@@ -34,6 +41,7 @@ pour le supprimer de la liste des chantiers en cours --}}
                         {{this.id_ville}}, {{this.code_postal}}</option>
                     {{/each}}
         </select> 
+        <p id="afficher_info_chantier"></p>ici
     </div>
 </div>
 
@@ -131,6 +139,11 @@ function afficherPrix(menu) {
     // le bouton ajouter un frais. La valeur change si on change la sélection
 }
 
+function afficherChantier(objet){
+    var info_chantier = Recup_select_info(menu_chantier, 'valeur'),
+    var afficher_info_chantier = docuement.querySelector("#afficher_info_chantier").innerHTML;
+    afficher_info_chantier = info_chantier;
+}
 function ajoutLigne(){
     var table = document.querySelector("#tableFacture");
     var row = table.insertRow(-1);
