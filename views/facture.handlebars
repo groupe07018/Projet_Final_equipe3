@@ -24,8 +24,16 @@ pour le supprimer de la liste des chantiers en cours --}}
         {{client}} (infos du client)<br>
     </div>
     <div class="grid-item-6">
-        Travaux effectués au: <br>
-        {{chantier}} (infos du chantier)
+        Chantier à facturer<br>
+
+        <select name="chantierActif" class="sansContour">
+                <option value="">Choisir</option>
+                    {{#each chantierActif}},
+                        <option class="sansContour" value="{{this.nom}}">{{this.nom_projet}} <br>
+                        {{this.adresse}}<br>
+                        {{this.id_ville}}, {{this.code_postal}}</option>
+                    {{/each}}
+        </select> 
     </div>
 </div>
 
@@ -57,7 +65,7 @@ pour le supprimer de la liste des chantiers en cours --}}
                     {{/each}}
                 </select> 
             </td>
-            <td id="p1"></td>
+            <td id="p1">ici</td>{{!-- je veux afficher le prix ici, et sur la ligne équivalente de la function à la ligne 134 --}}
             <td><input class="caseQuantite" type="number" id="quantite" name="quantite" required="true" placeholder="requis"></td>
             <td></td>
         </tr>
@@ -95,7 +103,7 @@ pour le supprimer de la liste des chantiers en cours --}}
 
 <div class="grid-container">
     <div class="grid-item-6">
-        <button type="submit" class="btn btn-primary">Enregister</button>  
+        <button type="submit" class="btn btn-primary">Enregister et archiver ce chantier</button>  
         <button type="button" onclick="window.print()" class="btn btn-danger">Imprimer</button>
     </div>
 </div>
@@ -114,8 +122,13 @@ function Recup_select_info(menu, selection){
  
 function afficherPrix(menu) {
     var valeur_prix = Recup_select_info(menu,'valeur');
-    var prix = document.querySelector("#p1")
+    var prix = document.querySelector("#p1")// comment afficher la variable prix dans la facture (où c'est inscrit ici?) sans utiliser de id
+    //On ne peut pas utiliser de id parce que à la ligne 134, la fonction ajoutLigne() ajoute une ligne dans la facture qui contient le menu 
+    //déroulant, si on met un id, ce sera le même qui serait dans la nouvelle ligne. Je n'arrive pas à trouver une façon de faire...
+
     prix.innerHTML = valeur_prix
+    console.log(valeur_prix) // on voit dans la console qu'on récupère bien la valeur prix pour chaque menu déroulant, même ceux ajoutés avec
+    // le bouton ajouter un frais. La valeur change si on change la sélection
 }
 
 function ajoutLigne(){

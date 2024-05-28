@@ -83,3 +83,8 @@ body{
     border: 1px solid black;
 }
 
+.sansContour{
+    border: none;
+    outline: 0px;
+}
+
