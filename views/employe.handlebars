@@ -1,26 +1,50 @@
 <div class="grid-container">
-    <div class="grid-item-center" id="employe">
-        <input type="text" id="nom" name="nom" readonly> {{employe.nom}}</div><br>
-    <div class="grid-item-center" id="numero">
-        #<input type="text" id="numero" name="numero" readonly>{{employe.numero}}</div><br><br>
-    <div class="grid-item-gauche" id="date">
-        <input type="date" id="date" name="date" readonly> </div>
-    <div class="grid-item-droite">
+    <div class="grid-item-1">
+        <input type="text" id="employe" name="employe" readonly> {{utilisateur.login}}</div>
+    <div class="grid-item-2">
+        #<input type="text" id="numero" name="numero" readonly>{{utilisateur.id}}</div><br><br><br>
+    <div class="grid-item-1">
         <select name="menu_deroulant">
             <option value="">Sélectionnez un chantier</option>
             {{#each chantier}}
-                <option value="{{this.adresse}}">{{this.adresse}}</option>
+                <option value="{{nom_projet}}">{{nom_projet}}</option>
             {{/each}}
         </select>
-    </div><br><br>
-    <div class="grid-item-gauche" id="entree">
+    </div><br><br><br>
+    <div class="grid-item-1">
         <button class="btn btn-success" type="submit" onclick="heureEntree()">Entrer au travail</button></div>
-    <div class="grid-item-droite" id="in">
-       <input type="text" id="in" name="in" readonly> {{this.heure}}</div>
-    </div>
-    <div class="grid-item-gauche" id="sortie">
-        <button class="btn btn-danger" type="submit" onclick="heureSortie()">Sortir du travail</button></div>
-    <div class="grid-item-droite" id="out">
-       <input type="text" id="out" name="out" readonly> {{this.heure}}</div>
+    <div class="grid-item-2">
+        <input type="text" id="heureIn" name="heureIn" readonly> {{heure.in}}</div><br><br><br>
+    <div class="grid-item-1">
+            <button class="btn btn-danger" type="submit" onclick="heureSortie()">Sortir du travail</button></div>
+        <div class="grid-item-2">
+            <input type="text" id="heureOut" name="heureOut" readonly> {{heure.out}}</div><br><br><br>
+        <div class="grid-item-1">
+            <input type="submit" value="Confirmer sortie"/>
     </div>
 </div>
+
+<script>
+    function heure() {
+        let now = new Date();
+        let annee = now.getFullYear() + ` `;
+        let mois    = now.getMonth() + 1 + `/`;
+        let jour    = now.getDate() + `/`;
+        let heure   = now.getHours() + `H`;
+        let minute  = now.getMinutes();
+   
+        let maintenant = jour + mois + annee + heure + minute;
+
+        return maintenant;
+    }
+
+    function heureEntree() {
+        let heureIn = heure();
+        document.getElementById("heureIn").value = heureIn;
+    }
+
+    function heureSortie() {
+        let heureOut = heure();
+        document.getElementById("heureOut").value = heureOut;
+}
+</script>

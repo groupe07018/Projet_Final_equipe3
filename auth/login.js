@@ -9,9 +9,14 @@ router.get('/', async function (req,res) {
     res.render('index');
 });
 
-router.get('/ajoutPremierUtilisateur', async function(req,res) {
-    res.render('ajoutPremierUtilisateur');
+
+router.get('/routerEmploye', async function(req,res) {
+    res.render('employe');
 });
+
+/*router.get('/ajoutPremierUtilisateur', async function(req,res) {
+    res.redirect('../ajoutPremierUtilisateur');
+});*/
 
 router.post('/', async (req,res) => {
     // Avoir les informations du formulaire
@@ -27,7 +32,7 @@ router.post('/', async (req,res) => {
 
         if (rows.length === 0) {
             console.log("Vous êtes le premier utilisateur, veuillez entrer vos informations") //test
-            res.redirect("/ajoutPremierUtilisateur");
+            res.redirect("ajoutPremierUtilisateur");
             return;
         }
 

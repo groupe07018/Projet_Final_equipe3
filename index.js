@@ -19,20 +19,30 @@ app.use(express.static("static"));
 
 // Ajoute les middleware pour les formulaires et cookie
 app.use(express.urlencoded({extended: true }));
+app.use(express.json());
 app.use(cookieParser());
 
 // Middleware pour la gestion des sessions (sessions.js)
 app.use(session.middleware);
 
-// Routeurs pour les pages de signup et login
+// Routeurs
 app.use("/signup", require("./auth/signup"));
 app.use("/login", require("./auth/login"));
+app.use('/routerEmploye', require('./routerEmploye'));
 
-const routerEmploye = require("./routerEmploye");
-app.use ("/routerEmploye");
+app.use((req,res,next) => {
+    let now = new Date();
+    let annee = now.getFullYear() + ` `;
+    let mois    = now.getMonth() + 1 + `/`;
+    let jour    = now.getDate() + `/`;
+    let heure   = now.getHours() + `H`;
+    let minute  = now.getMinutes();
+    console.log(jour+mois+annee+heure+minute);
+    next()
+})
 
 app.get('/', function(req, res){
-    res.render("index")
+    res.render("employe")
 });
 
 
