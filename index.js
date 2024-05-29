@@ -30,17 +30,6 @@ app.use("/signup", require("./auth/signup"));
 app.use("/login", require("./auth/login"));
 app.use('/routerEmploye', require('./routerEmploye'));
 
-app.use((req,res,next) => {
-    let now = new Date();
-    let annee = now.getFullYear() + ` `;
-    let mois    = now.getMonth() + 1 + `/`;
-    let jour    = now.getDate() + `/`;
-    let heure   = now.getHours() + `H`;
-    let minute  = now.getMinutes();
-    console.log(jour+mois+annee+heure+minute);
-    next()
-})
-
 app.get('/', function(req, res){
     res.render("employe")
 });
@@ -88,7 +77,7 @@ app.post('/login', async (req, res) => {
         console.error('Database query error: ', err);
         res.status(500).send('Internal Server Error');
     }
-});*/
+});
 
 app.get('/liste-employes', async (req, res) => {
     try {
@@ -196,7 +185,7 @@ app.post('/nouveau-contracteur', async (req, res) => {
 app.get('/chantiers-en-cours', (req, res) => {
 
     res.render('listeChantier'); 
-});
+});*/
 
 
 
