@@ -21,53 +21,80 @@ pour le supprimer de la liste des chantiers en cours --}}
     </div>
     <div class="grid-item-4">
         Facturé à: <br>
-        {{client}} (infos du client)<br>
+            <select name="client" class="sansContour">
+                <option value="">Choisir</option>
+                    {{#each client}},
+                        <option class="sansContour" value="{{this.nom}}">{{this.nom_projet}} <br>
+                        {{this.adresse}}<br>
+                        {{this.id_ville}}, {{this.code_postal}}</option>
+                    {{/each}}
+            </select> 
     </div>
     <div class="grid-item-6">
-        Travaux effectués au: <br>
-        {{chantier}} (infos du chantier)
+        Chantier à facturer<br>
+
+        <select name="menu_chantierActif" class="sansContour" onclick="afficherChantier(this)">
+                <option value="">Choisir</option>
+                    {{#each chantierActif}},
+                        <option class="sansContour" value="{{this.nom}}">{{this.nom_projet}} <br>
+                        {{this.adresse}}<br>
+                        {{this.id_ville}}, {{this.code_postal}}</option>
+                    {{/each}}
+        </select> 
+        <p id="afficher_info_chantier"></p>ici
     </div>
 </div>
 
-<table class="table table-striped">
-    <thead>
+<table id="tableFacture" class="table table-striped">
+    
         <tr class="table-secondary">
             <th>Description</th>
             <th>Taux</th>
             <th>Quantité</th>{{!-- faire les calculs dans le fichier script.js, en appelant la function avec le input de quantité --}}
             <th>Total</th>
         </tr>
-                        <tr>
+        <tr>
+            <td><button type="button" class="btn btn-primary" onclick="ajoutLigne()">Ajouter un frais</button> </td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
             <td>(Nombre heures){{heures}}</td>
             <td></td>
             <td></td>
             <td></td>
         </tr>
         <tr>
-            <td><select id="menu_frais_fixe" name="menu_frais_fixe">
+            <td><select name="menu_frais_fixe" onchange="afficherPrix(this)">
                     <option value="">Choisir</option>
                     {{#each frais_fixe}}
                         <option value="{{this.prix_frais_fixe}}">{{this.nom_frais_fixe}} {{this.prix_frais_fixe}}$ / {{this.unite_frais_fixe}}</option>
                     {{/each}}
                 </select> 
             </td>
-            <td><span id="prixFacture">ici</span></td>
+            <td id="p1">ici</td>{{!-- je veux afficher le prix ici, et sur la ligne équivalente de la function à la ligne 134 --}}
             <td><input class="caseQuantite" type="number" id="quantite" name="quantite" required="true" placeholder="requis"></td>
             <td></td>
         </tr>
+</table>
+<table id="tableTotal" class="table">
         <tr>
+            <td></td>
             <td></td>
             <td></td>
             <td>Sous-total</td>
             <td>$</td>
         </tr>
-                <tr>
+        <tr>
+            <td></td>
             <td></td>
             <td></td>
             <td>TPS</td>
             <td>$</td>
         </tr>
-                <tr>
+        <tr>
+            <td></td>
             <td></td>
             <td></td>
             <td>TVQ</td>
@@ -76,15 +103,64 @@ pour le supprimer de la liste des chantiers en cours --}}
         <tr>
             <td></td>
             <td></td>
+            <td></td>
             <td>Total</td>
             <td>$</td>
         </tr> 
-    </thead>
 </table>
 
 <div class="grid-container">
     <div class="grid-item-6">
-        <button type="submit" class="btn btn-primary">Enregister</button>  
+        <button type="submit" class="btn btn-primary">Enregister et archiver ce chantier</button>  
         <button type="button" onclick="window.print()" class="btn btn-danger">Imprimer</button>
     </div>
 </div>
+
+<script>
+
+// fonction fortement insprirée de cette page https://openclassrooms.com/forum/sujet/recuperer-valeur-dun-select-javascript-72e7d
+function Recup_select_info(menu, selection){
+    var index = menu.selectedIndex;
+
+    if((selection) && (selection == 'valeur')){
+        return menu.options[index].value;}
+    else{ 
+        return index;}
+}
+ 
+function afficherPrix(menu) {
+    var valeur_prix = Recup_select_info(menu,'valeur');
+    var prix = document.querySelector("#p1")// comment afficher la variable prix dans la facture (où c'est inscrit ici?) sans utiliser de id
+    //On ne peut pas utiliser de id parce que à la ligne 134, la fonction ajoutLigne() ajoute une ligne dans la facture qui contient le menu 
+    //déroulant, si on met un id, ce sera le même qui serait dans la nouvelle ligne. Je n'arrive pas à trouver une façon de faire...
+
+    prix.innerHTML = valeur_prix
+    console.log(valeur_prix) // on voit dans la console qu'on récupère bien la valeur prix pour chaque menu déroulant, même ceux ajoutés avec
+    // le bouton ajouter un frais. La valeur change si on change la sélection
+}
+
+function afficherChantier(objet){
+    var info_chantier = Recup_select_info(menu_chantier, 'valeur'),
+    var afficher_info_chantier = docuement.querySelector("#afficher_info_chantier").innerHTML;
+    afficher_info_chantier = info_chantier;
+}
+function ajoutLigne(){
+    var table = document.querySelector("#tableFacture");
+    var row = table.insertRow(-1);
+
+    row.innerHTML = `<td><select name="menu_frais_fixe" onchange="afficherPrix(this)">
+                    <option value="">Choisir</option>
+                    {{#each frais_fixe}}
+                        <option value="{{this.prix_frais_fixe}}">{{this.nom_frais_fixe}} {{this.prix_frais_fixe}}$ / {{this.unite_frais_fixe}}</option>
+                    {{/each}}
+                </select> 
+            </td>
+            <td><span id="prixFacture"></span></td>
+            <td><input class="caseQuantite" type="number" id="quantite" name="quantite" required="true" placeholder="requis"></td>
+            <td></td>`
+
+   
+
+
+}
+</script>

@@ -19,10 +19,16 @@ router.post('/frais_fixe', async function(req, res){
 })
 
 router.get('/facture', async function(req, res){
-    //const chantier = await db.execute ("SELECT * from chantier WHERE id = ")
+    const client= await db.execute("SELECT * from client");
+    const chantierActif = await db.execute ("SELECT * FROM chantier WHERE statut = 'actif'")
+    const chantierInactif = await db.execute ("SELECT * FROM chantier WHERE statut = 'inactif'")
     const frais_fixe = await db.execute("SELECT * FROM frais_fixe")
     //const heure_facturable = await db.execute()
-    res.render("facture", {frais_fixe:frais_fixe.rows})
+    console.log(chantierInactif)
+    res.render("facture", {frais_fixe:frais_fixe.rows, 
+        chantierActif:chantierActif.rows, 
+        chantierInactif:chantierInactif.rows,
+    client:client.rows})
 })
 
 router.get('/listeArchive', async function(req, res){// m'assurer que la page sommaire affiche bien les détails du chantier (adresse, et autres)
