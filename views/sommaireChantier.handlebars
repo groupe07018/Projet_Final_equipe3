@@ -2,8 +2,19 @@
 adresse du chantier, nom personne ressource, nom client, heures passées sur ce chantier à ce jour...
 doit fonctionner pour les deux listes de chantiers:  listeChantier.handlebars et listeArchive.handlebars--}}
 
+<h1>Sommaire du chantier</h1>
+<h2>{{chantier.adresse}}</h2>
+<p>Date de début: {{chantier.date_debut}}</p>
+<p>Date de fin: {{chantier.date_fin}}</p>
+<p>Ville: {{chantier.ville}}</p>
+<p>Contracteur: {{chantier.contracteur}}</p>
+
+
+
 <a href="facture"><button type="button" class="btn btn-primary">Facturer ce chantier</button></a>
 
 <form action="achiverChantier" method="post">
     <button type="button" class="btn btn-danger">Archiver ce chantier</button>
 </form>
+</form>
+-->

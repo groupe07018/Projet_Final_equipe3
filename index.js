@@ -1,9 +1,9 @@
 const express = require('express');
-const {engine} = require('express-handlebars');
+const { engine } = require('express-handlebars');
 const bodyParser = require('body-parser');
 const db = require("./db")
 const ajoutEmploye = require('./ajoutEmploye');
-
+const routerchantier = require('./routerchantier');
 const app = express();
 
 app.engine('handlebars', engine());
@@ -11,19 +11,21 @@ app.set('view engine', 'handlebars');
 app.set('views', './views');
 
 app.use(express.static("static"));
-
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/', ajoutEmploye); 
-
-app.get('/', function(req, res){
-    res.render("index")
-})
+//pour dire utiliser routerchantier.js
+app.use ("/", routerchantier);
 
 const routerFacture = require("./routerFacture");
-app.use("/", routerFacture);
+app.use('/', routerFacture);
 
-app.post('/login', async (req, res) => {
+
+app.get('/', function(req, res) {
+    res.render("index");
+});
+
+app.post('/login', async function(req, res) {
     const login = req.body.userLogin;
     const mdp = req.body.MDP;
 
@@ -36,15 +38,12 @@ app.post('/login', async (req, res) => {
         const result = await db.execute({
             sql: "SELECT * FROM utilisateur WHERE login = ? AND mot_de_passe = ?",
             args: [login, mdp]
-            });
-            
-        
-        console.log('Query result:', result.rows);
+        });
 
         if (result.rows.length > 0) {
-            res.render("patron", { login });
+            res.redirect('/chantiers-en-cours'); // Redirige vers la page de gestion des chantiers en cas de succès
         } else {
-            res.redirect('/'); 
+            res.redirect('/');
         }
     } catch (err) {
         console.error('Database query error: ', err);
