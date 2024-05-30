@@ -15,10 +15,10 @@ router.post("/employe/:id", async function (req,res,next) {
 
 router.get("/employe", async function (req,res) {
     const chantier = await db.execute({sql:"SELECT * FROM chantier WHERE statut = 'ouvert'",
-        args: {id}
+        args: {statut}
     })
-    console.log({chantier: nom_projet.rows})
-    res.render("employe", {chantier: nom_projet.rows})
+    console.log({chantier: chantier.rows})
+    res.render("employe", {chantier: chantier.rows})
 })
 
 module.exports = router;
