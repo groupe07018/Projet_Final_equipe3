@@ -6,6 +6,7 @@ const ajoutEmploye = require('./ajoutEmploye');
 const routerchantier = require('./routerchantier');
 const app = express();
 
+
 app.engine('handlebars', engine());
 app.set('view engine', 'handlebars');
 app.set('views', './views');

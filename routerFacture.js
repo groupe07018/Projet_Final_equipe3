@@ -20,20 +20,17 @@ router.post('/frais_fixe', async function(req, res){
 
 router.get('/facture', async function(req, res){
     const client= await db.execute("SELECT * from client");
-    const chantierActif = await db.execute (`SELECT ch.*, v.nom_ville, cl.* FROM chantier ch
+    const chantierActif = await db.execute (`SELECT ch.*, v.nom_ville FROM chantier ch
     JOIN ville v  
         ON v.id = ch.id_ville
-    JOIN client cl 
-        ON cl.id = ch.id_client
      WHERE statut = 'actif'`)
-    const chantierInactif = await db.execute (`SELECT ch.*, v.nom_ville, cl.* FROM chantier ch
+    const chantierInactif = await db.execute (`SELECT ch.*, v.nom_ville FROM chantier ch
     JOIN ville v  
         ON v.id = ch.id_ville
-    JOIN client cl 
-        ON cl.id = ch.id_client
      WHERE statut = 'inactif'`)
     const frais_fixe = await db.execute("SELECT * FROM frais_fixe")
     //const heure_facturable = await db.execute()
+    //console.log(chantierActif.rows)
     res.render("facture", {frais_fixe:frais_fixe.rows, 
         chantierActif:chantierActif.rows, 
         chantierInactif:chantierInactif.rows,
