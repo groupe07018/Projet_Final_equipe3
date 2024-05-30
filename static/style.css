@@ -63,6 +63,9 @@ body{
 .sousTexte{
     font-size: 12px;
     color:gray;
+}
+.caseQuantite{
+    width:100px;
 } 
 /*bouton pour accepter*/
 .btn-primary{
@@ -79,3 +82,9 @@ body{
     background-color: #DB6400;
     border: 1px solid black;
 }
+
+.sansContour{
+    border: none;
+    outline: 0px;
+}
+

@@ -1,1 +1,16 @@
-{{!-- interface de l'employé --}}
+<div class="grid-container">
+    <div class="grid-item-center" id="employe">
+        <input type="text" id="nom" name="nom" readonly> {{employe.nom}}</div><br>
+    <div class="grid-item-center" id="numero">
+        #<input type="text" id="numero" name="numero" readonly>{{employe.numero}}</div><br><br>
+    <div class="grid-item-gauche" id="date">
+        <input type="date" id="date" name="date" readonly> </div>
+    <div class="grid-item-droite">
+        <select name="menu_deroulant">
+            <option value="">Sélectionnez un chantier</option>
+            {{#each chantier}}
+                <option value="{{this.adresse}}">{{this.adresse}}</option>
+            {{/each}}
+        </select>
+    </div>
+</div>
