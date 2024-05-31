@@ -18,32 +18,40 @@ router.post('/frais_fixe', async function(req, res){
                     <button type='button' class='btn-close' data-bs-dismiss='alert'></button>Ajout effectué avec succès</div>`})
 })
 
-router.get('/facture', async function(req, res){
-    const client= await db.execute("SELECT * from client");
-    const chantierActif = await db.execute (`SELECT ch.*, v.nom_ville FROM chantier ch
-    JOIN ville v  
-        ON v.id = ch.id_ville
-     WHERE statut = 'actif'`)
-    const chantierInactif = await db.execute (`SELECT ch.*, v.nom_ville FROM chantier ch
-    JOIN ville v  
-        ON v.id = ch.id_ville
-     WHERE statut = 'inactif'`)
+router.get('/facture/:id', async function(req, res){//pour afficher la page: localhost:3000/facture/1 (ou id du chantier)
+    const idChantier = req.params.id
+    const chantier = await db.execute({
+        sql: `SELECT ch.*, cl.*
+                FROM chantier ch
+                JOIN client cl
+                    ON ch.id_client = cl.id
+                  WHERE ch.id = ?`,
+        args: [idChantier]})
     const frais_fixe = await db.execute("SELECT * FROM frais_fixe")
     //const heure_facturable = await db.execute()
-    //console.log(chantierActif.rows)
-    res.render("facture", {frais_fixe:frais_fixe.rows, 
-        chantierActif:chantierActif.rows, 
-        chantierInactif:chantierInactif.rows,
-    client:client.rows})
+    res.render("facture", {frais_fixe:frais_fixe.rows, chantier:chantier.rows, idChantier:idChantier})
 })
 
-router.get('/listeArchive', async function(req, res){// m'assurer que la page sommaire affiche bien les détails du chantier (adresse, et autres)
-    const chantier = await db.execute("SELECT * FROM chantier WHERE statut = 'termine'")
-    res.render("listeArchive", {chantier:chantier.rows})
+
+//pour enregister les informations de la facture
+router.post('/factureRemplie', async function(req, res){
+    const resultat = req.body
+    JSON.stringify(resultat)
+    const idFacture = req.query.id
+    console.log(idFacture)
+    /*await db.execute({
+        sql : `UPDATE chantier 
+        SET facture = :facture 
+            WHERE id= :id `,
+        args: {facture : JSON.stringify(resultat), id : id}
+    })
+//pour archiver le chantier une fois qu'il est facturé
+    await db.execute(`UPDATE chantier
+        SET statut = 'inactif'
+        WHERE id = `
+    )*/
+    res.json(resultat)
 })
 
-router.get('/sommaireChantier', function(req, res){ // enlever cette route, elle devrait être dans routerChantier déjà
-    res.render("sommaireChantier") 
-})
 
 module.exports = router;
