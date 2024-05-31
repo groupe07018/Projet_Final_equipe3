@@ -14,10 +14,6 @@ router.get('/routerEmploye', async function(req,res) {
     res.render('employe');
 });
 
-/*router.get('/ajoutPremierUtilisateur', async function(req,res) {
-    res.redirect('../ajoutPremierUtilisateur');
-});*/
-
 router.post('/', async (req,res) => {
     // Avoir les informations du formulaire
     const login = req.body.login;
@@ -31,7 +27,7 @@ router.post('/', async (req,res) => {
     const {rows} = await db.execute("SELECT * FROM utilisateur");
 
         if (rows.length === 0) {
-            console.log("Vous êtes le premier utilisateur, veuillez entrer vos informations") //test
+            console.log("Vous êtes le premier utilisateur, veuillez entrer vos informations") 
             res.redirect("ajoutPremierUtilisateur");
             return;
         }
@@ -57,11 +53,10 @@ router.post('/', async (req,res) => {
 
     const correct = timingSafeEqual(
         hashedPass,
-        user.password,
+        user.mot_de_passe,
     );
-
     if(correct) {
-        addInfo(await createSession(res), {user: user.login});  
+        addInfo(await createSession(res), {login: user.id});  
     }
     else {
         res.send("login ou mot de passe invalide");

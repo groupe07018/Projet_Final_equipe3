@@ -27,11 +27,12 @@ app.use(session.middleware);
 
 // Routeurs
 app.use("/signup", require("./auth/signup"));
+app.use("/ajoutPremierUtilisateur", require("./auth/signup"));
 app.use("/login", require("./auth/login"));
-app.use('/routerEmploye', require('./routerEmploye'));
+app.use('/employe', require('./routerEmploye'));
 
 app.get('/', function(req, res){
-    res.render("employe")
+    res.render("index")
 });
 
 

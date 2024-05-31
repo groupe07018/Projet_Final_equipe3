@@ -59,7 +59,7 @@ module.exports = {
             Object.entries(info) // Pour toutes les propiétés dans l'objet info
             .map((x) => x[0] + " = :" + x[0])  // Transforme en "prop = :prop"
             .join(", ") +   // Joint les propriétés avec des virgules entre
-            " WHERE login = :sessionId;",
+            " WHERE id = :sessionId;",
             args: {...info, sessionId},
         });
     },

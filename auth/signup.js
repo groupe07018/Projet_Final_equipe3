@@ -1,23 +1,46 @@
 const express = require("express");
-const { scyptSync, ramdomBytes } = require("crypto");
+const { scryptSync, randomBytes } = require("crypto");
 const db = require("../db");
-
-const { creteSession, addInfo } = require("../sessions");
 
 const router = express.Router();
 
-
-//à changer
+//Pour créer le premier utilisateur
 router.get ("/", (req,res) => {
     res.render("ajoutPremierUtilisateur");   
 });
+
+router.post ("/ajoutPremierUtilisateur", async (req,res) => {
+    // Aller chercher les informations du formulaire
+    const login = req.body.login;
+    const password = req.body.mot_de_passe;
+    const administrateur = req.body.administrateur;
+
+    // Créer le salt et hacher le mot de passe
+    const salt = randomBytes(16).toString("hex");
+    const hashedPass = scryptSync(password, salt, 64);
+
+    // Ajouter l'utilisateur à la base de données
+    db.execute({
+        sql: `INSERT INTO utilisateur (login, mot_de_passe, salt, profil_administrateur)
+         VALUES (:login, :hashedPass, :salt, :administrateur`, 
+        args: {
+            login,
+            hashedPass,
+            salt,
+            administrateur
+        },
+    });
+    
+     res.redirect("/"); 
+ });
+ 
 
 router.post("/", async function(req,res) {
     // Aller chercher les informations du formulaire
     const login = req.body.login;
     const password = req.body.mot_de_passe;
     if (!login || !password) {
-        res.redirect(400,"."); //à questionner "."
+        res.redirect(400,"/"); 
         return;
     }
 
@@ -38,7 +61,7 @@ router.post("/", async function(req,res) {
 
     // Ajouter l'utilisateur à la base de données
     db.execute({
-        sql: "INSERT INTO utilisateur (login, password, salt) VALUES (:login, :hashedPass, :salt",
+        sql: "INSERT INTO utilisateur (login, mot_de_passe, salt) VALUES (:login, :hashedPass, :salt)",
         args: {
             login,
             hashedPass,
@@ -46,10 +69,9 @@ router.post("/", async function(req,res) {
         },
     });
 
-    // Créer la session et lier à l'utilisateur
-    addInfo(await createSession(res), { login: login });
+    
 
-    res.redirect("/"); //à changer et vérifier pour des sessions différentes employés/patron
+    res.redirect("/patron"); 
 });
 
 module.exports = router;
