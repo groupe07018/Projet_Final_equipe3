@@ -17,8 +17,13 @@ router.get("/", async function (req,res) {
     const chantier = await db.execute({sql:"SELECT id, nom_projet FROM chantier WHERE statut = 'actif'",
         args: {}
     })
-    console.log({chantier: chantier.rows})
     res.render("employe", {chantier: chantier.rows})
 })
+
+/*router.post("/", async function (req,res) {
+    const punchIn = await db.execute({sql: "INSERT INTO horodateur (id_chantier, heure_debut) VALUES (":id_chantier = ,
+        arg: {heureInChiffre}
+     ]})
+})*/
 
 module.exports = router;

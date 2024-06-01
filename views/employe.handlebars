@@ -11,11 +11,15 @@
     <div class="grid-item-1">
         <button class="btn btn-success" type="submit" onclick="heureEntree()">Entrer au travail</button></div>
     <div class="grid-item-2">
-        <input type="text" id="heureIn" name="heureIn" readonly> {{heure.in}}</div><br><br><br>
+        <input type="text" id="heureIn" name="heureIn" readonly> {{heure.in}}</div>
+    <div class="grid-item-3">
+        <input type="number" id="heureInChiffre" name="heureInChiffre" readonly>{{heureInChiffre}}</div><br><br><br>
     <div class="grid-item-1">
             <button class="btn btn-danger" type="submit" onclick="heureSortie()">Sortir du travail</button></div>
         <div class="grid-item-2">
-            <input type="text" id="heureOut" name="heureOut" readonly> {{heure.out}}</div><br><br><br>
+            <input type="text" id="heureOut" name="heureOut" readonly> {{heure.out}}</div>
+            <div class="grid-item-3">
+        <input type="number" id="heureOutChiffre" name="heureOutChiffre" readonly>{{heureOutChiffre}}</div><br><br><br>
         <div class="grid-item-1">
             <input type="submit" value="Confirmer sortie"/>
     </div>
@@ -36,11 +40,15 @@
     }
 
     function heureEntree() {
+        let heureInChiffre = new Date().getTime();
+        document.getElementById("heureInChiffre").value = heureInChiffre; //à mettre hidden
         let heureIn = heure();
         document.getElementById("heureIn").value = heureIn;
     }
 
     function heureSortie() {
+        let heureOutChiffre = new Date().getTime();
+        document.getElementById("heureOutChiffre").value = heureOutChiffre;  //à mettre hidden
         let heureOut = heure();
         document.getElementById("heureOut").value = heureOut;
 }
