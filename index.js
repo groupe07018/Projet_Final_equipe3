@@ -2,7 +2,7 @@ const express = require('express');
 const {engine} = require('express-handlebars');
 const cookieParser = require("cookie-parser");
 const session = require("./sessions");
-//const bodyParser = require('body-parser');
+
 
 const db = require("./db");
 
@@ -13,9 +13,6 @@ app.set('view engine', 'handlebars');
 app.set('views', './views');
 
 app.use(express.static("static"));
-
-//app.use(bodyParser.urlencoded({ extended: false }));
-
 
 // Ajoute les middleware pour les formulaires et cookie
 app.use(express.urlencoded({extended: true }));
