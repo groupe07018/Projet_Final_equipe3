@@ -39,35 +39,6 @@ app.get('/', function(req, res) {
     res.render("index");
 });
 
-app.post('/login', async function(req, res) {
-    const login = req.body.userLogin;
-    const mdp = req.body.MDP;
-
-    if (login.length === 0 || mdp.length === 0) {
-        res.redirect('/');
-        return;
-    }
-
-    try {
-        const result = await db.execute({
-            sql: "SELECT * FROM utilisateur WHERE login = ? AND mot_de_passe = ?",
-            args: [login, mdp]
-        });
-
-        if (result.rows.length > 0) {
-            res.redirect('/chantiers-en-cours'); // Redirige vers la page de gestion des chantiers en cas de succès
-        } else {
-            res.redirect('/');
-        }
-    } catch (err) {
-        console.error('Database query error: ', err);
-        res.status(500).send('Internal Server Error');
-    }
-});
-app.get('/', function(req, res){
-    res.render("index");
-});
-
 
 app.get('/liste-employes', async (req, res) => {
     try {
