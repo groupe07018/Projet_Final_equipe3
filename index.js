@@ -1,26 +1,33 @@
 const express = require('express');
-const {engine} = require('express-handlebars');
+const { engine } = require('express-handlebars');
 const cookieParser = require("cookie-parser");
 const session = require("./sessions");
 
 
 const db = require("./db");
-
+const ajoutEmploye = require('./ajoutEmploye');
+const routerchantier = require('./routerchantier');
 const app = express();
+
 
 app.engine('handlebars', engine());
 app.set('view engine', 'handlebars');
 app.set('views', './views');
 
 app.use(express.static("static"));
-
 // Ajoute les middleware pour les formulaires et cookie
 app.use(express.urlencoded({extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 
+app.use('/', ajoutEmploye); 
+//pour dire utiliser routerchantier.js
+app.use ("/", routerchantier);
+
 // Middleware pour la gestion des sessions (sessions.js)
 app.use(session.middleware);
+const routerFacture = require("./routerFacture");
+app.use('/', routerFacture);
 
 // Routeurs
 app.use("/signup", require("./auth/signup"));
@@ -28,6 +35,35 @@ app.use("/ajoutPremierUtilisateur", require("./auth/signup"));
 app.use("/login", require("./auth/login"));
 app.use('/employe', require('./routerEmploye'));
 
+app.get('/', function(req, res) {
+    res.render("index");
+});
+
+app.post('/login', async function(req, res) {
+    const login = req.body.userLogin;
+    const mdp = req.body.MDP;
+
+    if (login.length === 0 || mdp.length === 0) {
+        res.redirect('/');
+        return;
+    }
+
+    try {
+        const result = await db.execute({
+            sql: "SELECT * FROM utilisateur WHERE login = ? AND mot_de_passe = ?",
+            args: [login, mdp]
+        });
+
+        if (result.rows.length > 0) {
+            res.redirect('/chantiers-en-cours'); // Redirige vers la page de gestion des chantiers en cas de succès
+        } else {
+            res.redirect('/');
+        }
+    } catch (err) {
+        console.error('Database query error: ', err);
+        res.status(500).send('Internal Server Error');
+    }
+});
 app.get('/', function(req, res){
     res.render("index");
 });
@@ -36,7 +72,7 @@ app.get('/', function(req, res){
 app.get('/liste-employes', async (req, res) => {
     try {
         const result = await db.execute({
-            sql: "SELECT * FROM employé"
+            sql: "SELECT * FROM utilisateur"
         });
 
         console.log('Query result:', result.rows);
@@ -55,30 +91,6 @@ app.get('/liste-employes', async (req, res) => {
 app.get('/nouvel-employe', (req, res) => {
 
     res.render('ajoutEmploye'); 
-});
-
-app.post('/nouvel-employe', async (req, res) => {
-    const nom = req.body.nom;
-
-    try {
-        const checkResult = await db.execute({
-            sql: "SELECT * FROM employé WHERE nom = ?",
-            args: [nom]
-        });
-
-        if (checkResult.rows.length > 0) {
-            res.send('<h2>Le nom existe déjà. Veuillez entrer un nom différent.</h2><a href="/nouvel-employe">Retour</a>');
-        } else {
-            await db.execute({
-                sql: "INSERT INTO employé (nom) VALUES (?)",
-                args: [nom]
-            });
-            res.redirect('/liste-employes');
-        }
-    } catch (err) {
-        console.error('Database query/insertion error: ', err);
-        res.status(500).send('Internal Server Error');
-    }
 });
 
 

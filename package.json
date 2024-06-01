@@ -1,6 +1,7 @@
 {
-  "name": "projet_final",
+  "name": "projet_final_equipe3",
   "version": "1.0.0",
+  "description": "��#\u0000 \u0000P\u0000r\u0000o\u0000j\u0000e\u0000t\u0000_\u0000F\u0000i\u0000n\u0000a\u0000l\u0000_\u0000e\u0000q\u0000u\u0000i\u0000p\u0000e\u00003\u0000\r\u0000 \u0000",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -9,10 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "@libsql/client": "^0.6.0",
-    "body-parser": "^1.20.2",
     "cookie-parser": "^1.4.6",
     "express": "^4.19.2",
     "express-handlebars": "^7.1.2"
-  },
-  "description": ""
+  }
 }
