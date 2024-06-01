@@ -36,50 +36,6 @@ app.get('/', function(req, res){
 });
 
 
-
-/*
-Page principale
-Afficher le nom d'utilisateur de la session s'il existe.
-Sinon, rediriger vers la page index.
-*/
-/*
-app.get("/", function( req, res) {
-    if (req.session && req.session.login) {
-      res.send(req.session.login);
-    } else {
-      res.redirect("/index");
-    }
-  });*/
-/*
-app.post('/login', async (req, res) => {
-    const login = req.body.userLogin;
-    const mdp = req.body.MDP;
-
-    if (login.length === 0 || mdp.length === 0) {
-        res.redirect('/');
-        return;
-    }
-
-    try {
-        const result = await db.execute({
-            sql: "SELECT * FROM utilisateur WHERE login = ? AND mot_de_passe = ?",
-            args: [login, mdp]
-            });
-            
-        
-        console.log('Query result:', result.rows);
-
-        if (result.rows.length > 0) {
-            res.render("patron", { login });
-        } else {
-            res.redirect('/'); 
-        }
-    } catch (err) {
-        console.error('Database query error: ', err);
-        res.status(500).send('Internal Server Error');
-    }
-});
-
 app.get('/liste-employes', async (req, res) => {
     try {
         const result = await db.execute({
