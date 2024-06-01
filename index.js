@@ -29,7 +29,7 @@ app.use("/login", require("./auth/login"));
 app.use('/employe', require('./routerEmploye'));
 
 app.get('/', function(req, res){
-    res.render("index")
+    res.render("index");
 });
 
 
@@ -139,7 +139,7 @@ app.post('/nouveau-contracteur', async (req, res) => {
 app.get('/chantiers-en-cours', (req, res) => {
 
     res.render('listeChantier'); 
-});*/
+});
 
 
 
