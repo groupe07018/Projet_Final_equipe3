@@ -27,7 +27,7 @@ router.post ("/ajoutPremierUtilisateur", async (req,res) => {
             login,
             hashedPass,
             salt,
-            administrateur
+            administrateur,
         },
     });
     
