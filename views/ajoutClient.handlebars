@@ -72,32 +72,21 @@ C'est différent du formulaire d'ajout de chantier car un entrepreneur général
         }
     </style>
 </head>
+
+
 <body>
-    <div class="form-container">
-        <h1>Ajouter un Client</h1>
-        <form action="/ajoutclient" method="POST">
-            <label for="nom">Nom du Client</label>
-            <input type="text" id="nom" name="nom" required>
-            
-            <label for="courriel">Courriel</label>
-            <input type="email" id="courriel" name="courriel" required>
-            
-            <label for="adresse">Adresse</label>
-            <input type="text" id="adresse" name="adresse" required>
-            
-            <label for="ville">Ville</label>
-            <select id="ville" name="ville" required>
-                {{#each villes}}
-                    <option value="{{this.id}}">{{this.nom_ville}}</option>
-                {{/each}}
-            </select>
-            
-            <label for="code_postal">Code Postal</label>
-            <input type="text" id="code_postal" name="code_postal" required>
-            
-            <button type="submit">Ajouter</button>
-        </form>
-        <a href="/chantiers-en-cours">Retour</a>
-    </div>
+    <h1>Ajouter un Nouveau Client</h1>
+    <form action="/ajoutclient" method="POST">
+        <label for="nom">Nom:</label>
+        <input type="text" id="nom" name="nom" required><br>
+
+        <label for="courriel">Courriel:</label>
+        <input type="email" id="courriel" name="courriel" required><br>
+
+        <label for="adresse_client">Adresse:</label>
+        <input type="text" id="adresse_client" name="adresse_client" required><br>
+
+        <button type="submit">Ajouter</button>
+    </form>
 </body>
 </html>

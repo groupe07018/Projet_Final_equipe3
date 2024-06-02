@@ -1,16 +1,55 @@
 <div class="grid-container">
-    <div class="grid-item-center" id="employe">
-        <input type="text" id="nom" name="nom" readonly> {{employe.nom}}</div><br>
-    <div class="grid-item-center" id="numero">
-        #<input type="text" id="numero" name="numero" readonly>{{employe.numero}}</div><br><br>
-    <div class="grid-item-gauche" id="date">
-        <input type="date" id="date" name="date" readonly> </div>
-    <div class="grid-item-droite">
+    <H2>Votre punch mobile</H2>
+    <div class="grid-item-1">
         <select name="menu_deroulant">
             <option value="">Sélectionnez un chantier</option>
             {{#each chantier}}
-                <option value="{{this.adresse}}">{{this.adresse}}</option>
+                <option value="{{nom_projet}}">{{nom_projet}}</option>
             {{/each}}
         </select>
+    </div><br><br><br>
+    <div class="grid-item-1">
+        <button class="btn btn-success" type="submit" onclick="heureEntree()">Entrer au travail</button></div>
+    <div class="grid-item-2">
+        <input type="text" id="heureIn" name="heureIn" readonly> {{heure.in}}</div>
+    <div class="grid-item-3">
+        <input type="number" id="heureInChiffre" name="heureInChiffre" readonly>{{heureInChiffre}}</div><br><br><br>
+    <div class="grid-item-1">
+            <button class="btn btn-danger" type="submit" onclick="heureSortie()">Sortir du travail</button></div>
+        <div class="grid-item-2">
+            <input type="text" id="heureOut" name="heureOut" readonly> {{heure.out}}</div>
+            <div class="grid-item-3">
+        <input type="number" id="heureOutChiffre" name="heureOutChiffre" readonly>{{heureOutChiffre}}</div><br><br><br>
+        <div class="grid-item-1">
+            <input type="submit" value="Confirmer sortie"/>
     </div>
 </div>
+
+<script>
+    function heure() {
+        let now = new Date();
+        let annee = now.getFullYear() + ` `;
+        let mois    = now.getMonth() + 1 + `/`;
+        let jour    = now.getDate() + `/`;
+        let heure   = now.getHours() + `H`;
+        let minute  = now.getMinutes();
+   
+        let maintenant = jour + mois + annee + heure + minute;
+
+        return maintenant;
+    }
+
+    function heureEntree() {
+        let heureInChiffre = new Date().getTime();
+        document.getElementById("heureInChiffre").value = heureInChiffre; //à mettre hidden
+        let heureIn = heure();
+        document.getElementById("heureIn").value = heureIn;
+    }
+
+    function heureSortie() {
+        let heureOutChiffre = new Date().getTime();
+        document.getElementById("heureOutChiffre").value = heureOutChiffre;  //à mettre hidden
+        let heureOut = heure();
+        document.getElementById("heureOut").value = heureOut;
+}
+</script>

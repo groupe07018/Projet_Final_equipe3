@@ -1,9 +1,10 @@
 const express = require('express');
 const { engine } = require('express-handlebars');
-const bodyParser = require('body-parser');
-const db = require("./db")
-const ajoutEmploye = require('./ajoutEmploye');
-const routerchantier = require('./routerchantier');
+const cookieParser = require("cookie-parser");
+const session = require("./sessions");
+
+
+const db = require("./db");;
 const app = express();
 
 
@@ -12,45 +13,28 @@ app.set('view engine', 'handlebars');
 app.set('views', './views');
 
 app.use(express.static("static"));
-app.use(bodyParser.urlencoded({ extended: false }));
+// Ajoute les middleware pour les formulaires et cookie
+app.use(express.urlencoded({extended: true }));
+app.use(express.json());
+app.use(cookieParser());
 
-app.use('/', ajoutEmploye); 
-//pour dire utiliser routerchantier.js
-app.use ("/", routerchantier);
-
+// Middleware pour la gestion des sessions (sessions.js)
+app.use(session.middleware);
 const routerFacture = require("./routerFacture");
-app.use('/', routerFacture);
+const routerChantier = require("./routerchantier");
 
+app.use('/', routerFacture);
+app.use('/', routerChantier);
+// Routeurs
+app.use("/signup", require("./auth/signup"));
+app.use("/ajoutPremierUtilisateur", require("./auth/signup"));
+app.use("/login", require("./auth/login"));
+app.use('/employe', require('./routerEmploye'));
 
 app.get('/', function(req, res) {
     res.render("index");
 });
 
-app.post('/login', async function(req, res) {
-    const login = req.body.userLogin;
-    const mdp = req.body.MDP;
-
-    if (login.length === 0 || mdp.length === 0) {
-        res.redirect('/');
-        return;
-    }
-
-    try {
-        const result = await db.execute({
-            sql: "SELECT * FROM utilisateur WHERE login = ? AND mot_de_passe = ?",
-            args: [login, mdp]
-        });
-
-        if (result.rows.length > 0) {
-            res.redirect('/chantiers-en-cours'); // Redirige vers la page de gestion des chantiers en cas de succès
-        } else {
-            res.redirect('/');
-        }
-    } catch (err) {
-        console.error('Database query error: ', err);
-        res.status(500).send('Internal Server Error');
-    }
-});
 
 app.get('/liste-employes', async (req, res) => {
     try {
@@ -140,6 +124,34 @@ app.get('/chantiers-en-cours', (req, res) => {
 
 
 
-app.listen(3000, function(){
-    console.log('Fonctionne');
-})
+
+app.post('/login', async function(req, res) {
+    const login = req.body.userLogin;
+    const mdp = req.body.MDP;
+
+    if (login.length === 0 || mdp.length === 0) {
+        res.redirect('/');
+        return;
+    }
+
+    try {
+        const result = await db.execute({
+            sql: "SELECT * FROM utilisateur WHERE login = ? AND mot_de_passe = ?",
+            args: [login, mdp]
+        });
+
+        if (result.rows.length > 0) {
+            res.redirect('/chantiers-en-cours'); // redirige vers la page de gestion des chantiers en cas de succès
+        } else {
+            res.redirect('/');
+        }
+    } catch (err) {
+        console.error("Erreur", err);
+        res.status(500).send("Erreur dans la base de données interne");
+    }
+});
+
+app.listen(3000, function() {
+    console.log("Fonctionne");
+});
+

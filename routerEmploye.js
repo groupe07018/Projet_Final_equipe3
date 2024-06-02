@@ -3,22 +3,17 @@ const exphbs = require("express-handlebars");
 const router = express.Router();
 const db = require("./db");
 
-/*
-const d = new Date();
-document.getElementById("date").innerHTML = d;*/
-
-router.post("./employe", async function (req,res) {
-    const {rows} = await db.execute({sql:"SELECT nom_projet FROM chantier WHERE status= ouvert", //comment l'écrire
-        args: {nom_projet}
+router.get("/", async function (req,res) {
+    const chantier = await db.execute({sql:"SELECT id, nom_projet FROM chantier WHERE statut = 'actif'",
+        args: {}
     })
-    res.render("employe", {rows})
+    res.render("employe", {chantier: chantier.rows})
 })
 
-router.get("/afficher", async function (req,res) {
-    const {rows} = await db.execute({sql:"SELECT * FROM utilisateur WHERE id = :id",
-        args: {id}
-    })
-    res.render("afficher", rows[0]);
-})
+/*router.post("/", async function (req,res) {
+    const punchIn = await db.execute({sql: "INSERT INTO horodateur (id_chantier, heure_debut) VALUES (":id_chantier = ,
+        arg: {heureInChiffre}
+     ]})
+})*/
 
 module.exports = router;
