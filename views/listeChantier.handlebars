@@ -21,118 +21,130 @@
         .chantier-table th {
             background-color: #f2f2f2;
         }
+        .button-container {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        .button-container button {
+            margin-right: 10px;
+        }
+        .top-right-buttons {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
     </style>
 </head>
 <body>
-    <h1>Gestion des Chantiers</h1>
+    <h1>Liste des Chantiers</h1>
 
-    <div>
-        <button onclick="location.href='/ajoutclient'">Ajouter un Client</button>
-        <button onclick="location.href='/ajoutchantier'">Ajouter un Chantier</button>
+    <div class="top-right-buttons">
+        <button onclick="location.href='/'">Page principale</button>
+        <button onclick="location.href='/logout'">Déconnexion</button>
     </div>
 
-    <div>
-        <button onclick="showSection('clients')">Clients</button>
-        <button onclick="showSection('chantiersEnCours')">Chantiers en Cours</button>
-        <button onclick="showSection('chantiersArchives')">Chantiers Archivés</button>
+    <div class="button-container">
+        <button onclick="location.href='/ajoutClient'">Ajouter un Client</button>
+        <button onclick="location.href='/ajoutChantier'">Ajouter un Chantier</button>
+        <button onclick="showSection('sectionChantiersEnCours')">Chantiers en cours</button>
+        <button onclick="showSection('sectionChantiersArchives')">Chantiers archivés</button>
+        <button onclick="showSection('sectionClients')">Clients</button>
     </div>
 
-    <div id="content">
-        <!-- Section pour les clients -->
-        <div id="clients" class="section">
-            <h2>Clients</h2>
-            <div style="width: 100%; max-height: 200px; overflow: auto; border: 1px solid #ccc; padding: 10px;">
-                <table class="chantier-table">
-                    <thead>
-                        <tr>
-                            <th>Nom</th>
-                            <th>Courriel</th>
-                            <th>Adresse</th>
-                            <th>Ville</th>
-                            <th>Code Postal</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {{#each clients}}
-                        <tr>
-                            <td>{{this.nom}}</td>
-                            <td>{{this.courriel}}</td>
-                            <td>{{this.adresse}}</td>
-                            <td>{{this.nom_ville}}</td>
-                            <td>{{this.code_postal}}</td>
-                        </tr>
-                        {{/each}}
-                    </tbody>
-                </table>
-            </div>
-        </div>
+    <div id="sectionChantiersEnCours" class="section active">
+        <h2>Chantiers en cours</h2>
+        <table class="chantier-table">
+            <thead>
+                <tr>
+                    <th>Nom du Projet</th>
+                    <th>Adresse du Chantier</th>
+                    <th>Client</th>
+                    <th>Total Heures</th>
+                    <th>Statut</th>
+                    <th>Facture</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each chantiersEnCours}}
+                <tr>
+                    <td>{{this.nom_projet}}</td>
+                    <td>{{this.adresse_chantier}}</td>
+                    <td>{{this.client_nom}}</td>
+                    <td>{{this.total_heures}}</td>
+                    <td>{{this.statut}}</td>
+                    <td><button onclick="location.href='/facture/{{this.id}}'">Facture</button></td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
 
-        <!-- Section pour les chantiers en cours -->
-        <div id="chantiersEnCours" class="section">
-            <h2>Chantiers en Cours</h2>
-            <div style="width: 100%; max-height: 200px; overflow: auto; border: 1px solid #ccc; padding: 10px;">
-                <table class="chantier-table">
-                    <thead>
-                        <tr>
-                            <th>Nom du projet</th>
-                            <th>Adresse</th>
-                            <th>Ville</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {{#each chantiersEnCours}}
-                        <tr>
-                            <td>{{this.nom_projet}}</td>
-                            <td>{{this.adresse}}</td>
-                            <td>{{this.nom_ville}}</td>
-                            <td><button onclick="location.href='/facture/{{this.id}}'">Facture</button></td>
-                        </tr>
-                        {{/each}}
-                    </tbody>
-                </table>
-            </div>
-        </div>
+    <div id="sectionChantiersArchives" class="section">
+        <h2>Chantiers archivés</h2>
+        <table class="chantier-table">
+            <thead>
+                <tr>
+                    <th>Nom du Projet</th>
+                    <th>Adresse du Chantier</th>
+                    <th>Client</th>
+                    <th>Total Heures</th>
+                    <th>Statut</th>
+                    <th>Facture</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each chantiersArchives}}
+                <tr>
+                    <td>{{this.nom_projet}}</td>
+                    <td>{{this.adresse_chantier}}</td>
+                    <td>{{this.client_nom}}</td>
+                    <td>{{this.total_heures}}</td>
+                    <td>{{this.statut}}</td>
+                    <td><button onclick="location.href='/facture/{{this.id}}'">Facture</button></td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
 
-        <!-- Section pour les chantiers archivés -->
-        <div id="chantiersArchives" class="section">
-            <h2>Chantiers Archivés</h2>
-            <div style="width: 100%; max-height: 200px; overflow: auto; border: 1px solid #ccc; padding: 10px;">
-                <table class="chantier-table">
-                    <thead>
-                        <tr>
-                            <th>Nom du projet</th>
-                            <th>Adresse</th>
-                            <th>Ville</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {{#each chantiersArchives}}
-                        <tr>
-                            <td>{{this.nom_projet}}</td>
-                            <td>{{this.adresse}}</td>
-                            <td>{{this.nom_ville}}</td>
-                            <td><button onclick="location.href='/facture/{{this.id}}'">Facture</button></td>
-                        </tr>
-                        {{/each}}
-                    </tbody>
-                </table>
-            </div>
-        </div>
+    <div id="sectionClients" class="section">
+        <h2>Clients</h2>
+        <table class="chantier-table">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Courriel</th>
+                    <th>Adresse</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each clients}}
+                <tr>
+                    <td>{{this.nom}}</td>
+                    <td>{{this.courriel}}</td>
+                    <td>{{this.adresse_client}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
     </div>
 
     <script>
         function showSection(sectionId) {
-            document.querySelectorAll('.section').forEach(section => {
+            // Masquer toutes les sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
                 section.classList.remove('active');
             });
-            document.getElementById(sectionId).classList.add('active');
-        }
 
-        
-        document.getElementById('clients').classList.add('active');
+            // Afficher la section sélectionnée
+            const selectedSection = document.getElementById(sectionId);
+            if (selectedSection) {
+                selectedSection.classList.add('active');
+            }
+        }
     </script>
 </body>
 </html>
+
 

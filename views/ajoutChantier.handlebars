@@ -64,18 +64,18 @@
         }
     </style>
 </head>
+
+
+
+
 <body>
     <h1>Ajouter un Nouveau Chantier</h1>
     <form action="/ajoutchantier" method="POST">
-        <label for="adresse">Adresse:</label>
-        <input type="text" id="adresse" name="adresse" required><br>
+        <label for="nom_projet">Nom du Projet:</label>
+        <input type="text" id="nom_projet" name="nom_projet" required><br>
 
-        <label for="ville">Ville:</label>
-        <select id="ville" name="ville" required>
-            {{#each villes}}
-                <option value="{{this.id}}">{{this.nom_ville}}</option>
-            {{/each}}
-        </select><br>
+        <label for="adresse_chantier">Adresse du Chantier:</label>
+        <input type="text" id="adresse_chantier" name="adresse_chantier" required><br>
 
         <label for="client">Client:</label>
         <select id="client" name="client" required>
@@ -84,18 +84,11 @@
             {{/each}}
         </select><br>
 
-        <label for="employes">Employés:</label>
-        <select id="employes" name="employes" multiple>
-            {{#each employes}}
-                <option value="{{this.id}}">{{this.nom}}</option>
-            {{/each}}
-        </select><br>
-
         <label for="statut">Statut:</label>
-        <input type="radio" id="actif" name="statut" value="actif" checked>
-        <label for="actif">Actif</label>
-        <input type="radio" id="inactif" name="statut" value="inactif">
-        <label for="inactif">Inactif</label><br>
+        <select id="statut" name="statut" required>
+            <option value="actif">Actif</option>
+            <option value="inactif">Inactif</option>
+        </select><br>
 
         <button type="submit">Ajouter</button>
     </form>
