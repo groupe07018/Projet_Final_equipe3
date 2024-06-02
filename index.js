@@ -124,9 +124,7 @@ app.get('/chantiers-en-cours', (req, res) => {
 
 
 
-app.listen(3000, function(){
-    console.log('Fonctionne');
-})
+
 app.post('/login', async function(req, res) {
     const login = req.body.userLogin;
     const mdp = req.body.MDP;
