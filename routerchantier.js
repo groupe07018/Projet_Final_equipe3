@@ -84,7 +84,7 @@ router.post('/ajoutchantier', async function(req, res) {
 });
 
 // Route pour gérer la redirection vers la page de facturation
-router.get('/facture/:id', async function(req, res) {
+/*router.get('/facture/:id', async function(req, res) {
     const chantierId = req.params.id;
     try {
         const chantier = await db.execute({
@@ -103,7 +103,7 @@ router.get('/facture/:id', async function(req, res) {
         console.error('Database query error: ', err);
         res.status(500).send('Internal Server Error');
     }
-});
+});*/
 
 module.exports = router;
 

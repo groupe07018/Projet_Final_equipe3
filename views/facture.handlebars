@@ -5,9 +5,9 @@ pour le supprimer de la liste des chantiers en cours --}}
     <div class="grid-container">
     <div class="grid-item-1">
         <h1>Facture</h1>
-        <strong>No facture: {{idChantier}}</strong><br>
+            No facture: <input type="text" class="sansContour" name="idChantier" value={{idChantier}}></strong><br>
         <span class="sousTexte">
-            Date: <input type="date" name="date" required><br>
+            Date: <input type="date" name="date" id="calendrier" required><br>
         </span>
     </div>
     <div class="grid-item-3">
@@ -24,22 +24,27 @@ pour le supprimer de la liste des chantiers en cours --}}
         <strong>Facturé à:</strong> <br>
         {{#each chantier}}
             {{this.nom}}<br>
-            afficher adresse...
+            {{this.adresse_client}}
         {{/each}}
     
     </div>
     <div class="grid-item-6">
         <strong>Travaux effectués au:</strong><br>
         {{#each chantier}}
-            {{this.nom_projet}}<br>
-            {{this.adresse}}
+            {{chantier.nom_projet}}<br>
+            {{this.adresse_chantier}}
         {{/each}}
     </div>
 </div>
 <br>
+
+<!--Pour avoir accès au JSON pour la fonction loaderFacture(), remettre hidden -->
+<p id="factureEnregistre">{{afficherFacture.facture}} 
+</p>
+
 <table id="tableFacture" class="table table-striped">
     
-        <tr class="table-secondary">
+        <tr id="enTeteTable" class="table-secondary">
             <th>Description</th>
             <th>Taux</th>
             <th>Quantité</th>
@@ -53,20 +58,10 @@ pour le supprimer de la liste des chantiers en cours --}}
         </tr>
         <tr>
             <td>Heures facturables</td>
-            <td><input type="number" class="caseQuantite" id="tauxHoraire" placeholder="requis" required onkeyup="calculHeure()"></td>
-            <td><input type="number" value="10" class="caseQuantite" id="heureFacturable" placeholder="requis"  onkeyup="calculHeure()" required ></td> <!--aller chercher value dans la BD et enlever la value)-->
+            <td><input type="number" name="tauxHoraire" class="caseQuantite" id="tauxHoraire" placeholder="requis" required onkeyup="calculHeure()"></td>
+            <td><input type="number" name="nombreHeure" value="10" class="caseQuantite" id="heureFacturable" placeholder="requis"  onkeyup="calculHeure()" required ></td> <!--aller chercher value dans la BD et enlever la value)-->
             <td><span id="afficherSousTotalHeure"></span></td>
         </tr>
-        <td><select name="menu_frais_fixe" required onchange="afficherPrix(this)">
-                    <option value="">- Sélectionner -</option>
-                    {{#each frais_fixe}}
-                        <option value="{{this.prix_frais_fixe}}">{{this.nom_frais_fixe}} {{this.prix_frais_fixe}}$ / {{this.unite_frais_fixe}}</option>
-                    {{/each}}
-                </select> 
-            </td>
-            <td></td>
-            <td><input defaultValue="0" class="caseQuantite" type="number" id="quantite" name="quantite" required="true" placeholder="requis" onkeyup="calculFraisFixes(this)"></td>
-            <td name="sousTotalFraisFixe"></td>
             
 </table>
 <button type="button" class="btn btn-primary pasImprimer" onclick="ajoutLigne()">Ajouter un frais</button>
@@ -111,8 +106,34 @@ pour le supprimer de la liste des chantiers en cours --}}
 </form>
 
 <script>
-var sousTotalHeure = 0; //utiliser pour le calcul final
-var sousTotalFrais =0 // utiliser pour le calcul final
+
+   document.addEventListener("DOMContentLoaded", loaderFacture)
+    function loaderFacture(){
+        const json = document.querySelector("#factureEnregistre").innerHTML
+        if(json == ""){
+            return
+        }
+        else
+        {
+        const obj = JSON.parse(json)
+
+        let afficherDate = document.querySelector('#calendrier')
+        afficherDate.value = obj.date
+
+        let afficherTauxHoraire = document.querySelector("#tauxHoraire")
+        afficherTauxHoraire.value = obj.tauxHoraire
+        calculHeure()  
+
+        let nombreLigne = obj.menu_frais_fixe
+        for (let x = 0; x<nombreLigne.length; x++){
+            ajoutLigne()
+
+        }
+    } 
+}
+
+var sousTotalHeure = 0; //utilisé pour le calcul final
+var sousTotalFrais =0 // utilisé pour le calcul final
 
 function Recup_select_info(menu, selection){
     var index = menu.selectedIndex;
@@ -127,6 +148,7 @@ function calculHeure(){
     document.querySelector("#tableTotal").hidden = true
     document.querySelector("#boutonEnregistrer").hidden = true
     document.querySelector("#boutonImprimer").hidden = true
+
     let heureFacturable = document.querySelector("#heureFacturable").value
     let tauxHoraire = document.querySelector('#tauxHoraire').value
     let afficherSousTotalHeure = document.querySelector("#afficherSousTotalHeure")
@@ -204,4 +226,5 @@ function ajoutLigne(){
             <td><input defaultValue="0" class="caseQuantite" type="number" id="quantite" name="quantite" required="true" placeholder="requis" onkeyup="calculFraisFixes(this)"></td>
             <td name="sousTotalFraisFixe"></td>`
 }
+
 </script>
