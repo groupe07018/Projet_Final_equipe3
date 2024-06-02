@@ -1,139 +1,3 @@
-{{!-- facture faite selon les données de la BD quand un chantier est terminé. Prévoir ensuite pouvoir archiver ce chantier 
-pour le supprimer de la liste des chantiers en cours --}}
-<!-- facture.handlebars -->
-<!--
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Facture</title>
-</head>
-<body>
-    <div class="grid-container">
-        <div class="grid-item-1">
-            <h1>Facture</h1>
-            No facture {{chantier.id}}<br>
-            <span class="sousTexte">
-                Date: <input type="date" name="date" required="true"><br>
-                Échéance <br><br>
-            </span>
-        </div>
-        <div class="grid-item-3">
-            <p class="coordonneesNom">
-            <strong>Céramique David Laroche</strong><br>
-            3012 Anctil, St-Denis-deBrompton, QC<br>
-            819-222-2222<br>
-            <span class="sousTexte">
-            TPS: 33333333444 TVQ: 333333444444<br>
-            RBQ: 22222222222</span>
-            </p>
-        </div>
-        <div class="grid-item-4">
-            Facturé à: <br>
-            {{chantier.client_nom}}<br>
-            {{chantier.client_adresse}}<br>
-        </div>
-        <div class="grid-item-6">
-            Chantier à facturer<br>
-            {{chantier.nom_projet}}<br>
-            {{chantier.adresse_chantier}}<br>
-        </div>
-    </div>
-
-    <table id="tableFacture" class="table table-striped">
-        <tr class="table-secondary">
-            <th>Description</th>
-            <th>Taux</th>
-            <th>Quantité</th>
-            <th>Total</th>
-        </tr>
-        <tr>
-            <td><button type="button" class="btn btn-primary" onclick="ajoutLigne()">Ajouter un frais</button> </td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>(Nombre heures){{chantier.total_heures}}</td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td><select name="menu_frais_fixe" onchange="afficherPrix(this)">
-                    <option value="">Choisir</option>
-                    {{#each fraisFixes}}
-                        <option value="{{this.prix_frais_fixe}}">{{this.nom_frais_fixe}} {{this.prix_frais_fixe}}$ / {{this.unite_frais_fixe}}</option>
-                    {{/each}}
-                </select> 
-            </td>
-            <td id="p1">ici</td>
-            <td><input class="caseQuantite" type="number" id="quantite" name="quantite" required="true" placeholder="requis"></td>
-            <td></td>
-        </tr>
-    </table>
-    <table id="tableTotal" class="table">
-        <tr>
-            <td></td>
-            <td></td>
-            <td>Sous-total</td>
-            <td>$</td>
-        </tr>
-        <tr>
-            <td></td>
-            <td></td>
-            <td>TPS</td>
-            <td>$</td>
-        </tr>
-        <tr>
-            <td></td>
-            <td></td>
-            <td>TVQ</td>
-            <td>$</td>
-        </tr>
-        <tr>
-            <td></td>
-            <td></td>
-            <td>Total</td>
-            <td>$</td>
-        </tr> 
-    </table>
-
-    <div class="grid-container">
-        <div class="grid-item-6">
-            <button type="submit" class="btn btn-primary">Enregister et archiver ce chantier</button>  
-            <button type="button" onclick="window.print()" class="btn btn-danger">Imprimer</button>
-        </div>
-    </div>
-
-    <script>
-        function afficherPrix(menu) {
-            var valeur_prix = menu.value;
-            var prix = document.querySelector("#p1");
-            prix.innerHTML = valeur_prix;
-        }
-
-        function ajoutLigne() {
-            var table = document.querySelector("#tableFacture");
-            var row = table.insertRow(-1);
-            row.innerHTML = `
-                <td><select name="menu_frais_fixe" onchange="afficherPrix(this)">
-                        <option value="">Choisir</option>
-                        {{#each fraisFixes}}
-                            <option value="{{this.prix_frais_fixe}}">{{this.nom_frais_fixe}} {{this.prix_frais_fixe}}$ / {{this.unite_frais_fixe}}</option>
-                        {{/each}}
-                    </select> 
-                </td>
-                <td><span id="prixFacture"></span></td>
-                <td><input class="caseQuantite" type="number" id="quantite" name="quantite" required="true" placeholder="requis"></td>
-                <td></td>
-            `;
-        }
-    </script>
-</body>
-</html>
--->
-
 <form action="/factureRemplie" method="post">
     <div class="grid-container">
     <div class="grid-item-1">
@@ -361,3 +225,139 @@ function ajoutLigne(){
 }
 
 </script>
+
+{{!-- facture faite selon les données de la BD quand un chantier est terminé. Prévoir ensuite pouvoir archiver ce chantier 
+pour le supprimer de la liste des chantiers en cours --}}
+<!-- facture.handlebars -->
+<!--
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Facture</title>
+</head>
+<body>
+    <div class="grid-container">
+        <div class="grid-item-1">
+            <h1>Facture</h1>
+            No facture {{chantier.id}}<br>
+            <span class="sousTexte">
+                Date: <input type="date" name="date" required="true"><br>
+                Échéance <br><br>
+            </span>
+        </div>
+        <div class="grid-item-3">
+            <p class="coordonneesNom">
+            <strong>Céramique David Laroche</strong><br>
+            3012 Anctil, St-Denis-deBrompton, QC<br>
+            819-222-2222<br>
+            <span class="sousTexte">
+            TPS: 33333333444 TVQ: 333333444444<br>
+            RBQ: 22222222222</span>
+            </p>
+        </div>
+        <div class="grid-item-4">
+            Facturé à: <br>
+            {{chantier.client_nom}}<br>
+            {{chantier.client_adresse}}<br>
+        </div>
+        <div class="grid-item-6">
+            Chantier à facturer<br>
+            {{chantier.nom_projet}}<br>
+            {{chantier.adresse_chantier}}<br>
+        </div>
+    </div>
+
+    <table id="tableFacture" class="table table-striped">
+        <tr class="table-secondary">
+            <th>Description</th>
+            <th>Taux</th>
+            <th>Quantité</th>
+            <th>Total</th>
+        </tr>
+        <tr>
+            <td><button type="button" class="btn btn-primary" onclick="ajoutLigne()">Ajouter un frais</button> </td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>(Nombre heures){{chantier.total_heures}}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><select name="menu_frais_fixe" onchange="afficherPrix(this)">
+                    <option value="">Choisir</option>
+                    {{#each fraisFixes}}
+                        <option value="{{this.prix_frais_fixe}}">{{this.nom_frais_fixe}} {{this.prix_frais_fixe}}$ / {{this.unite_frais_fixe}}</option>
+                    {{/each}}
+                </select> 
+            </td>
+            <td id="p1">ici</td>
+            <td><input class="caseQuantite" type="number" id="quantite" name="quantite" required="true" placeholder="requis"></td>
+            <td></td>
+        </tr>
+    </table>
+    <table id="tableTotal" class="table">
+        <tr>
+            <td></td>
+            <td></td>
+            <td>Sous-total</td>
+            <td>$</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td>TPS</td>
+            <td>$</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td>TVQ</td>
+            <td>$</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td>Total</td>
+            <td>$</td>
+        </tr> 
+    </table>
+
+    <div class="grid-container">
+        <div class="grid-item-6">
+            <button type="submit" class="btn btn-primary">Enregister et archiver ce chantier</button>  
+            <button type="button" onclick="window.print()" class="btn btn-danger">Imprimer</button>
+        </div>
+    </div>
+
+    <script>
+        function afficherPrix(menu) {
+            var valeur_prix = menu.value;
+            var prix = document.querySelector("#p1");
+            prix.innerHTML = valeur_prix;
+        }
+
+        function ajoutLigne() {
+            var table = document.querySelector("#tableFacture");
+            var row = table.insertRow(-1);
+            row.innerHTML = `
+                <td><select name="menu_frais_fixe" onchange="afficherPrix(this)">
+                        <option value="">Choisir</option>
+                        {{#each fraisFixes}}
+                            <option value="{{this.prix_frais_fixe}}">{{this.nom_frais_fixe}} {{this.prix_frais_fixe}}$ / {{this.unite_frais_fixe}}</option>
+                        {{/each}}
+                    </select> 
+                </td>
+                <td><span id="prixFacture"></span></td>
+                <td><input class="caseQuantite" type="number" id="quantite" name="quantite" required="true" placeholder="requis"></td>
+                <td></td>
+            `;
+        }
+    </script>
+</body>
+</html>
+-->
