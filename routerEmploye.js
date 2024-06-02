@@ -10,10 +10,11 @@ router.get("/", async function (req,res) {
     res.render("employe", {chantier: chantier.rows})
 })
 
-router.get("/employe/:login", async function (req,res) {
-    const user = await db.execute({sql: "SELECT * FROM utilisateur WHERE id = :login",
-        args: {login: req.params.login}
+router.get("/employe/:id", async function (req,res) {
+    const user = await db.execute({sql: "SELECT * FROM utilisateur WHERE id = :id",
+        args: {id: req.params.id}
     })
+    console.log(user);
     res.render("employe", {login: user.rows});
     ;
 }); ///à régler, cela n'affiche pas le login dans la page employé
@@ -46,5 +47,6 @@ router.post('/ajoutHeureFin', async function(req, res){
         {message: `<div class='alert alert-success alert-dismissible'>
                     <button type='button' class='btn-close' data-bs-dismiss='alert'></button>Ajout effectué avec succès</div>`})
 */
+
 
 module.exports = router;

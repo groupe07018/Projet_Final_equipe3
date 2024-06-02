@@ -59,22 +59,19 @@ router.post('/', async (req,res) => {
         user.mot_de_passe,
     );
     if(correct) {
-        addInfo(await createSession(res), {login: user.id});  
+        addInfo(await createSession(res), {login: user.id}); //p-e ajouter une vérification de session au lieu d'en créer une
+        console.log(result.rows[0].profil_administrateur)  
+        if (result.rows[0].profil_utilisateur > 0) {
+            res.redirect("patron");
+        }
+        else {
+            res.redirect("employe"); 
+        }
     }
     else {
         res.send("login ou mot de passe invalide");
         return;
     }
-    const estAdmin = await db.execute({
-        sql: "SELECT profil_administrateur FROM utilisateur WHERE login = ?",  
-        args: [login], 
-    });   
-        if (estAdmin != 1) {
-            res.redirect("employe");
-        }
-        else {
-            res.redirect("patron"); 
-        }
 });
 
 
