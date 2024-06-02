@@ -134,13 +134,13 @@ pour le supprimer de la liste des chantiers en cours --}}
 </html>
 -->
 
-<div class="grid-container">
+<form action="/factureRemplie" method="post">
+    <div class="grid-container">
     <div class="grid-item-1">
         <h1>Facture</h1>
-        No facture {{id_chantier}}<br>
+        <strong>No facture: {{idChantier}}</strong><br>
         <span class="sousTexte">
-            Date: <input type="date" name="date" required="true"><br>
-            Échéance <br><br>
+            Date: <input type="date" name="date" required><br>
         </span>
     </div>
     <div class="grid-item-3">
@@ -154,105 +154,99 @@ pour le supprimer de la liste des chantiers en cours --}}
         </p>
     </div>
     <div class="grid-item-4">
-        Facturé à: <br>
-            <select name="client" class="sansContour">
-                <option value="">Choisir</option>
-                    {{#each client}},
-                        <option class="sansContour" value="{{this.nom}}">{{this.nom_projet}} <br>
-                        {{this.adresse}}<br>
-                        {{this.id_ville}}, {{this.code_postal}}</option>
-                    {{/each}}
-            </select> 
+        <strong>Facturé à:</strong> <br>
+        {{#each chantier}}
+            {{this.nom}}<br>
+            afficher adresse...
+        {{/each}}
+    
     </div>
     <div class="grid-item-6">
-        Chantier à facturer<br>
-
-        <select name="menu_chantierActif" class="sansContour" onclick="afficherChantier(this)">
-                <option value="">Choisir</option>
-                    {{#each chantierActif}},
-                        <option class="sansContour" value="{{this.nom}}">{{this.nom_projet}} <br>
-                        {{this.adresse}}<br>
-                        {{this.id_ville}}, {{this.code_postal}}</option>
-                    {{/each}}
-        </select> 
-        <p id="afficher_info_chantier"></p>ici
+        <strong>Travaux effectués au:</strong><br>
+        {{#each chantier}}
+            {{this.nom_projet}}<br>
+            {{this.adresse}}
+        {{/each}}
     </div>
 </div>
-
+<br>
 <table id="tableFacture" class="table table-striped">
     
         <tr class="table-secondary">
             <th>Description</th>
             <th>Taux</th>
-            <th>Quantité</th>{{!-- faire les calculs dans le fichier script.js, en appelant la function avec le input de quantité --}}
-            <th>Total</th>
+            <th>Quantité</th>
+            <th>Sous-total</th>
         </tr>
         <tr>
-            <td><button type="button" class="btn btn-primary" onclick="ajoutLigne()">Ajouter un frais</button> </td>
             <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>(Nombre heures){{heures}}</td>
             <td></td>
             <td></td>
             <td></td>
         </tr>
         <tr>
-            <td><select name="menu_frais_fixe" onchange="afficherPrix(this)">
-                    <option value="">Choisir</option>
+            <td>Heures facturables</td>
+            <td><input type="number" class="caseQuantite" id="tauxHoraire" placeholder="requis" required onkeyup="calculHeure()"></td>
+            <td><input type="number" value="10" class="caseQuantite" id="heureFacturable" placeholder="requis"  onkeyup="calculHeure()" required ></td> <!--aller chercher value dans la BD et enlever la value)-->
+            <td><span id="afficherSousTotalHeure"></span></td>
+        </tr>
+        <td><select name="menu_frais_fixe" required onchange="afficherPrix(this)">
+                    <option value="">- Sélectionner -</option>
                     {{#each frais_fixe}}
                         <option value="{{this.prix_frais_fixe}}">{{this.nom_frais_fixe}} {{this.prix_frais_fixe}}$ / {{this.unite_frais_fixe}}</option>
                     {{/each}}
                 </select> 
             </td>
-            <td id="p1">ici</td>{{!-- je veux afficher le prix ici, et sur la ligne équivalente de la function à la ligne 134 --}}
-            <td><input class="caseQuantite" type="number" id="quantite" name="quantite" required="true" placeholder="requis"></td>
             <td></td>
-        </tr>
+            <td><input defaultValue="0" class="caseQuantite" type="number" id="quantite" name="quantite" required="true" placeholder="requis" onkeyup="calculFraisFixes(this)"></td>
+            <td name="sousTotalFraisFixe"></td>
+            
 </table>
-<table id="tableTotal" class="table">
+<button type="button" class="btn btn-primary pasImprimer" onclick="ajoutLigne()">Ajouter un frais</button>
+<button type="button"class="btn btn-primary boutonDroite pasImprimer" onclick="calculSousTotalFinal()">CALCULER</button>
+<table id="tableTotal" hidden class="table">
         <tr>
             <td></td>
             <td></td>
             <td></td>
             <td>Sous-total</td>
-            <td>$</td>
+            <td><span id="sousTotalFinal"></span></td>
         </tr>
         <tr>
             <td></td>
             <td></td>
             <td></td>
             <td>TPS</td>
-            <td>$</td>
+            <td id="tps"></td>
         </tr>
         <tr>
             <td></td>
             <td></td>
             <td></td>
             <td>TVQ</td>
-            <td>$</td>
+            <td id="tvq"></td>
         </tr>
         <tr>
             <td></td>
             <td></td>
             <td></td>
             <td>Total</td>
-            <td>$</td>
+            <td id="totalFinal"></td>
         </tr> 
 </table>
 
 <div class="grid-container">
     <div class="grid-item-6">
-        <button type="submit" class="btn btn-primary">Enregister et archiver ce chantier</button>  
-        <button type="button" onclick="window.print()" class="btn btn-danger">Imprimer</button>
+        <button id="boutonEnregistrer" type="submit" hidden class="btn btn-primary pasImprimer">Enregister et archiver ce chantier</button>  
+        <button id="boutonImprimer" type="button" hidden onclick="window.print()" class="btn btn-danger pasImprimer">Imprimer</button>
     </div>
 </div>
+</form>
 
 <script>
+var sousTotalHeure = 0; //utiliser pour le calcul final
+var sousTotalFrais =0 // utiliser pour le calcul final
 
-// fonction fortement insprirée de cette page https://openclassrooms.com/forum/sujet/recuperer-valeur-dun-select-javascript-72e7d
 function Recup_select_info(menu, selection){
     var index = menu.selectedIndex;
 
@@ -262,39 +256,85 @@ function Recup_select_info(menu, selection){
         return index;}
 }
  
-function afficherPrix(menu) {
-    var valeur_prix = Recup_select_info(menu,'valeur');
-    var prix = document.querySelector("#p1")// comment afficher la variable prix dans la facture (où c'est inscrit ici?) sans utiliser de id
-    //On ne peut pas utiliser de id parce que à la ligne 134, la fonction ajoutLigne() ajoute une ligne dans la facture qui contient le menu 
-    //déroulant, si on met un id, ce sera le même qui serait dans la nouvelle ligne. Je n'arrive pas à trouver une façon de faire...
+function calculHeure(){
+    document.querySelector("#tableTotal").hidden = true
+    document.querySelector("#boutonEnregistrer").hidden = true
+    document.querySelector("#boutonImprimer").hidden = true
+    let heureFacturable = document.querySelector("#heureFacturable").value
+    let tauxHoraire = document.querySelector('#tauxHoraire').value
+    let afficherSousTotalHeure = document.querySelector("#afficherSousTotalHeure")
+    tauxHoraire = Number(tauxHoraire)
+    heureFacturable = Number(heureFacturable)
+    totalHeure = heureFacturable * tauxHoraire 
 
-    prix.innerHTML = valeur_prix
-    console.log(valeur_prix) // on voit dans la console qu'on récupère bien la valeur prix pour chaque menu déroulant, même ceux ajoutés avec
-    // le bouton ajouter un frais. La valeur change si on change la sélection
+    afficherSousTotalHeure.innerHTML = totalHeure.toFixed(2)
+    sousTotalHeure = totalHeure
+} 
+
+function afficherPrix(menu){
+    let valeur_prix = Recup_select_info(menu,'valeur');
+    let parentMenu = menu.parentElement
+    let frereMenu = parentMenu.nextElementSibling 
+    valeur_prix = Number(valeur_prix)
+    frereMenu.innerHTML= valeur_prix.toFixed(2)
 }
 
-function afficherChantier(objet){
-    var info_chantier = Recup_select_info(menu_chantier, 'valeur'),
-    var afficher_info_chantier = docuement.querySelector("#afficher_info_chantier").innerHTML;
-    afficher_info_chantier = info_chantier;
+function calculFraisFixes(quantite){
+    document.querySelector("#tableTotal").hidden = true
+    document.querySelector("#boutonEnregistrer").hidden = true
+    document.querySelector("#boutonImprimer").hidden = true
+    let parentQuantite = quantite.parentElement
+    let valeur_prix = parentQuantite.previousElementSibling
+    let afficherSousTotal = parentQuantite.nextElementSibling
+    let sousTotal = valeur_prix.innerHTML * quantite.value
+    afficherSousTotal.innerHTML = sousTotal
 }
+
+function calculTotalFraisFixe(){
+    let recupTotaux = document.getElementsByName("sousTotalFraisFixe")
+    for(let x of recupTotaux){
+        valeurSousTotal = Number(x.innerHTML)
+        sousTotalFrais += valeurSousTotal
+    }
+     console.log(sousTotalFrais)
+}
+
+function calculSousTotalFinal(){
+    calculTotalFraisFixe()
+    afficherSousTotalFinal = document.querySelector("#sousTotalFinal")
+    afficherTotalFinal = document.querySelector("#totalFinal")
+    sousTotalFinal = sousTotalHeure + sousTotalFrais
+    afficherSousTotalFinal.innerHTML = sousTotalFinal.toFixed(2)
+    calculTaxe(sousTotalFinal)
+    document.querySelector("#tableTotal").hidden = false
+    document.querySelector("#boutonEnregistrer").hidden = false
+    document.querySelector("#boutonImprimer").hidden = false
+}
+
+function calculTaxe(x){
+    let tps = document.querySelector("#tps")
+    let tvq = document.querySelector("#tvq")
+    let calculTPS = ((x*5)/100);
+    let calculTVQ = ((x*9.975)/100);
+    let montantTxIn = (x + calculTPS + calculTVQ).toFixed(2);
+    tps.innerHTML = calculTPS.toFixed(2)
+    tvq.innerHTML = calculTVQ.toFixed(2)
+    afficherTotalFinal.innerHTML = montantTxIn
+}
+
 function ajoutLigne(){
     var table = document.querySelector("#tableFacture");
     var row = table.insertRow(-1);
 
-    row.innerHTML = `<td><select name="menu_frais_fixe" onchange="afficherPrix(this)">
-                    <option value="">Choisir</option>
+    row.innerHTML = ` <td><select name="menu_frais_fixe" required onchange="afficherPrix(this)">
+                    <option value="">- Sélectionner -</option>
                     {{#each frais_fixe}}
                         <option value="{{this.prix_frais_fixe}}">{{this.nom_frais_fixe}} {{this.prix_frais_fixe}}$ / {{this.unite_frais_fixe}}</option>
                     {{/each}}
                 </select> 
             </td>
-            <td><span id="prixFacture"></span></td>
-            <td><input class="caseQuantite" type="number" id="quantite" name="quantite" required="true" placeholder="requis"></td>
-            <td></td>`
-
-   
-
-
+            <td></td>
+            <td><input defaultValue="0" class="caseQuantite" type="number" id="quantite" name="quantite" required="true" placeholder="requis" onkeyup="calculFraisFixes(this)"></td>
+            <td name="sousTotalFraisFixe"></td>`
 }
 </script>
