@@ -34,6 +34,7 @@ app.use("/signup", require("./auth/signup"));
 app.use("/ajoutPremierUtilisateur", require("./auth/signup"));
 app.use("/login", require("./auth/login"));
 app.use('/employe', require('./routerEmploye'));
+app.use('/patron', require('./routerPatron'));
 
 app.get('/', function(req, res) {
     res.render("index");

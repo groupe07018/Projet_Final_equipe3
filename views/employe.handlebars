@@ -1,5 +1,6 @@
+<H2>Votre punch mobile</H2>
+<h2>Bienvenue, {{login}}!</h2>
 <div class="grid-container">
-    <H2>Votre punch mobile</H2>
     <div class="grid-item-1">
         <select name="menu_deroulant">
             <option value="">Sélectionnez un chantier</option>
@@ -20,8 +21,6 @@
             <input type="text" id="heureOut" name="heureOut" readonly> {{heure.out}}</div>
             <div class="grid-item-3">
         <input type="number" id="heureOutChiffre" name="heureOutChiffre" readonly>{{heureOutChiffre}}</div><br><br><br>
-        <div class="grid-item-1">
-            <input type="submit" value="Confirmer sortie"/>
     </div>
 </div>
 
@@ -33,6 +32,13 @@
         let jour    = now.getDate() + `/`;
         let heure   = now.getHours() + `H`;
         let minute  = now.getMinutes();
+
+		let unite = minute%10;
+		let dizaine = (minute - unite)/10;
+
+        if (dizaine === 0) {
+            minute = "0" + now.getMinutes();
+        }
    
         let maintenant = jour + mois + annee + heure + minute;
 

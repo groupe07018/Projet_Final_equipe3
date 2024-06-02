@@ -34,6 +34,9 @@ router.post ("/ajoutPremierUtilisateur", async (req,res) => {
      res.redirect("/"); 
  });
  
+router.get ("/", (req,res) => {
+    res.render("patron");   
+});
 
 router.post("/", async function(req,res) {
     // Aller chercher les informations du formulaire
@@ -68,8 +71,6 @@ router.post("/", async function(req,res) {
             salt,
         },
     });
-
-    
 
     res.redirect("/patron"); 
 });

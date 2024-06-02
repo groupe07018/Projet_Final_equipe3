@@ -9,9 +9,12 @@ router.get('/', async function (req,res) {
     res.render('index');
 });
 
-
 router.get('/routerEmploye', async function(req,res) {
     res.render('employe');
+});
+
+router.get('/routerPatron', async function(req,res) {
+    res.render('patron');
 });
 
 router.post('/', async (req,res) => {
@@ -62,7 +65,16 @@ router.post('/', async (req,res) => {
         res.send("login ou mot de passe invalide");
         return;
     }
-    res.redirect("employe");
+    const estAdmin = await db.execute({
+        sql: "SELECT profil_administrateur FROM utilisateur WHERE login = ?",  
+        args: [login], 
+    });   
+        if (estAdmin != 1) {
+            res.redirect("employe");
+        }
+        else {
+            res.redirect("patron"); 
+        }
 });
 
 
