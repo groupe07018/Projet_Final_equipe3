@@ -30,7 +30,6 @@ app.use("/signup", require("./auth/signup"));
 app.use("/ajoutPremierUtilisateur", require("./auth/signup"));
 app.use("/login", require("./auth/login"));
 app.use('/employe', require('./routerEmploye'));
-app.use('/patron', require('./routerPatron'));
 
 
 app.get('/', function(req, res) {
@@ -59,14 +58,14 @@ app.get('/liste-employes', async (req, res) => {
 
 app.get('/nouvel-employe', (req, res) => {
 
-    res.render('ajoutEmploye'); 
+    res.render('ajoutUtilisateur'); 
 });
 
 
 app.get('/liste-contracteurs', async (req, res) => {
     try {
         const result = await db.execute({
-            sql: "SELECT nom_compagnie, courriel FROM contracteur"
+            sql: "SELECT nom, courriel, adresse_client FROM client"
         });
 
         console.log('Query result:', result.rows);
@@ -84,30 +83,30 @@ app.get('/liste-contracteurs', async (req, res) => {
 
 app.get('/nouveau-contracteur', (req, res) => {
 
-    res.render('ajoutContracteur'); 
+    res.render('ajoutClient'); 
 });
 
 app.post('/nouveau-contracteur', async (req, res) => {
-    const { nom_compagnie, courriel } = req.body;
+    const { nom, courriel, adresse_client } = req.body;
 
     try {
 
         const checkResult = await db.execute({
-            sql: "SELECT * FROM contracteur WHERE nom_compagnie = ? AND courriel = ?",
-            args: [nom_compagnie, courriel]
+            sql: "SELECT * FROM client WHERE nom = ? AND courriel = ?",
+            args: [nom, courriel]
         });
 
         if (checkResult.rows.length > 0) {
 
-            res.send(`<h2>Le contracteur existe déjà. Veuillez saisir des informations différentes.</h2>
+            res.send(`<h2>Le client existe déjà. Veuillez saisir des informations différentes.</h2>
                       <a href="/nouveau-contracteur">Retour</a>`);
         } else {
             await db.execute({
-                sql: "INSERT INTO contracteur (nom_compagnie, courriel) VALUES (?, ?)",
-                args: [nom_compagnie, courriel]
+                sql: "INSERT INTO client (nom, courriel, adresse_client) VALUES (?, ?, ?)",
+                args: [nom, courriel, adresse_client]
             });
 
-            res.redirect('/liste-contracteurs');
+            res.render('/listeContracteurs');
         }
     } catch (err) {
         console.error('Database insertion error: ', err);
@@ -121,8 +120,6 @@ app.get('/chantiers-en-cours', (req, res) => {
 
     res.render('listeChantier'); 
 });
-
-
 
 
 

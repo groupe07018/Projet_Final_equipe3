@@ -60,11 +60,11 @@ router.post('/', async (req,res) => {
     );
     if(correct) {
         addInfo(await createSession(res), {login: user.id}); //p-e ajouter une vérification de session au lieu d'en créer une 
-        if (result.rows[0].profil_utilisateur===1) {
-            res.redirect("patron");
+        if (result.rows[0].profil_administrateur===1) {
+            res.render("/patron");
         }
         else {
-            res.redirect("employe"); 
+            res.redirect("/employe"); 
         }
     }
     else {
