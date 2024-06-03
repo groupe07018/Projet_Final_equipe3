@@ -60,7 +60,7 @@
         <tr>
             <td>Heures facturables</td>
             <td><input type="number" name="tauxHoraire" class="caseQuantite" id="tauxHoraire"  placeholder="requis" required onkeyup="calculHeure()"></td>
-            <td><input type="number" name="nombreHeure" class="caseQuantite" id="heureFacturable"  step="0.01" placeholder="requis"  onkeyup="calculHeure()" required ></td> <!--aller chercher value dans la BD et enlever la value)-->
+            <td><input type="number" name="nombreHeure" class="caseQuantite" id="heureFacturable"  step="0.01" placeholder="requis"  onkeyup="calculHeure()" required ></td>
             <td><span id="afficherSousTotalHeure"></span></td>
         </tr>
             
@@ -126,12 +126,11 @@
         calculHeure()
 
         let afficherNombreHeure = document.querySelector("#heureFacturable")
-        afficherNombreHeure = obj.nombreHeure  
+        afficherNombreHeure.value = obj.nombreHeure  
 
         let nombreLigne = obj.menu_frais_fixe
         for (let x = 0; x<nombreLigne.length; x++){
             ajoutLigne()
-
         }
     } 
 }
@@ -148,6 +147,14 @@ function Recup_select_info(menu, selection){
         return index;}
 }
  
+ function afficherPrix(menu){
+    let valeur_prix = Recup_select_info(menu,'valeur');
+    let parentMenu = menu.parentElement
+    let frereMenu = parentMenu.nextElementSibling 
+    valeur_prix = Number(valeur_prix)
+    frereMenu.innerHTML= valeur_prix.toFixed(2)
+}
+
 function heureFacturable(){
     let total = Number(document.querySelector("#afficherHeureFacturable").innerHTML)
     total = (total / 3600000).toFixed(2);
@@ -170,14 +177,6 @@ function calculHeure(){
     afficherSousTotalHeure.innerHTML = totalHeure.toFixed(2)
     sousTotalHeure = totalHeure
 } 
-
-function afficherPrix(menu){
-    let valeur_prix = Recup_select_info(menu,'valeur');
-    let parentMenu = menu.parentElement
-    let frereMenu = parentMenu.nextElementSibling 
-    valeur_prix = Number(valeur_prix)
-    frereMenu.innerHTML= valeur_prix.toFixed(2)
-}
 
 function calculFraisFixes(quantite){
     document.querySelector("#tableTotal").hidden = true

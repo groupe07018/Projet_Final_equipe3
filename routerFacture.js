@@ -55,7 +55,6 @@ router.get('/facture/:id', async function(req, res){
         heureFacturable,
         afficherFacture
        })
-       console.log(heureFacturable)
 })
 
 //pour enregister les informations de la facture
