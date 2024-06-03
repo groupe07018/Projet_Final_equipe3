@@ -39,6 +39,10 @@
 <p id="factureEnregistre">{{afficherFacture.facture}} 
 </p>
 
+ <!--Pour avoir accès au total d'heures pour la fonction heureFacturable() -->
+<p hidden id="afficherHeureFacturable">
+    {{heureFacturable.sous_total_heure}}
+</p>
 <table id="tableFacture" class="table table-striped">
     
         <tr id="enTeteTable" class="table-secondary">
@@ -55,8 +59,8 @@
         </tr>
         <tr>
             <td>Heures facturables</td>
-            <td><input type="number" name="tauxHoraire" class="caseQuantite" id="tauxHoraire" placeholder="requis" required onkeyup="calculHeure()"></td>
-            <td><input type="number" name="nombreHeure" value="10" class="caseQuantite" id="heureFacturable" placeholder="requis"  onkeyup="calculHeure()" required ></td> <!--aller chercher value dans la BD et enlever la value)-->
+            <td><input type="number" name="tauxHoraire" class="caseQuantite" id="tauxHoraire"  placeholder="requis" required onkeyup="calculHeure()"></td>
+            <td><input type="number" name="nombreHeure" class="caseQuantite" id="heureFacturable"  step="0.01" placeholder="requis"  onkeyup="calculHeure()" required ></td> <!--aller chercher value dans la BD et enlever la value)-->
             <td><span id="afficherSousTotalHeure"></span></td>
         </tr>
             
@@ -101,13 +105,13 @@
     </div>
 </div>
 </form>
-
 <script>
 
    document.addEventListener("DOMContentLoaded", loaderFacture)
     function loaderFacture(){
-        const json = document.querySelector("#factureEnregistre").innerHTML
-        if(json == ""){
+        heureFacturable()
+        const json = document.querySelector("#factureEnregistre").innerHTML 
+        if(json == ""){ // sert à rien, trouver une alternative
             return
         }
         else
@@ -119,7 +123,10 @@
 
         let afficherTauxHoraire = document.querySelector("#tauxHoraire")
         afficherTauxHoraire.value = obj.tauxHoraire
-        calculHeure()  
+        calculHeure()
+
+        let afficherNombreHeure = document.querySelector("#heureFacturable")
+        afficherNombreHeure = obj.nombreHeure  
 
         let nombreLigne = obj.menu_frais_fixe
         for (let x = 0; x<nombreLigne.length; x++){
@@ -141,6 +148,13 @@ function Recup_select_info(menu, selection){
         return index;}
 }
  
+function heureFacturable(){
+    let total = Number(document.querySelector("#afficherHeureFacturable").innerHTML)
+    total = (total / 3600000).toFixed(2);
+    document.querySelector("#heureFacturable").value = total  
+
+}
+
 function calculHeure(){
     document.querySelector("#tableTotal").hidden = true
     document.querySelector("#boutonEnregistrer").hidden = true

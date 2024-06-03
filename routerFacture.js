@@ -39,12 +39,23 @@ router.get('/facture/:id', async function(req, res){
     })
     const afficherFacture = chantier.rows[0]
     const frais_fixe = await db.execute("SELECT * FROM frais_fixe")
-    //const heure_facturable = await db.execute()
+    const recup_heure = await db.execute({
+            sql: `SELECT h.heure_debut, h.heure_fin,  c.id, SUM(h.heure_fin - h.heure_debut) as sous_total_heure
+            FROM horodateur h
+            LEFT JOIN chantier c
+                on c.id = h.id_chantier
+            WHERE c.id = ?`,
+            args:[idChantier]
+        })
+        const heureFacturable = recup_heure.rows[0]
+
     res.render("facture", {frais_fixe:frais_fixe.rows, 
         chantier:chantier.rows, 
         idChantier:idChantier, 
+        heureFacturable,
         afficherFacture
        })
+       console.log(heureFacturable)
 })
 
 //pour enregister les informations de la facture
@@ -63,14 +74,13 @@ router.post('/factureRemplie', async function(req, res){
         args: {facture : JSON.stringify(resultat), id : idFacture}
     })
 //pour archiver le chantier une fois qu'il est facturé
-// fonctionne mais je ne veux pas changer le statut tout le temps, décommenter plus tard
-    /*await db.execute({
+    await db.execute({
         sql: `UPDATE chantier
         SET statut = 'inactif'
         WHERE id = :id`,
         args:{id:idFacture}
-})*/
-    res.render("ajoutFraisFixe")// changer le render pour listeChantier quand elle fonctionne
+})
+    res.redirect("chantiers-en-cours")// changer le render pour patron quand elle fonctionne
 })
 
 

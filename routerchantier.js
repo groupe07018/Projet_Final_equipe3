@@ -23,7 +23,7 @@ router.get('/chantiers-en-cours', async function(req, res) {
         https://www.sqlite.org/lang_datefunc.html
         j ai trouver tout ces site la mais j arrive pas a enlever les sec infini 
         */
-        const chantiersEnCours = await db.execute({
+        /*const chantiersEnCours = await db.execute({
             sql: `
                 SELECT chantier.*, client.nom AS client_nom, client.adresse_client AS client_adresse,
                 IFNULL(SUM(
@@ -36,9 +36,25 @@ router.get('/chantiers-en-cours', async function(req, res) {
                 WHERE chantier.statut = 'actif'
                 GROUP BY chantier.id
             `
-        });
+        });*/
 
-        const chantiersArchives = await db.execute({
+        const chantiersEnCours = await db.execute(
+            `SELECT ch.*, cl.*
+            FROM chantier ch
+            JOIN client cl
+                ON ch.id_client = cl.id
+            WHERE ch.statut = 'actif'`
+        )
+
+        const chantiersArchives = await db.execute(
+            `SELECT ch.*, cl.*
+            FROM chantier ch
+            JOIN client cl
+                ON ch.id_client = cl.id
+            WHERE ch.statut = 'inactif'`
+        )
+
+        /*const chantiersArchives = await db.execute({
             sql: `
                 SELECT chantier.*, client.nom AS client_nom, client.adresse_client AS client_adresse,
                 IFNULL(SUM(
@@ -51,7 +67,7 @@ router.get('/chantiers-en-cours', async function(req, res) {
                 WHERE chantier.statut = 'inactif'
                 GROUP BY chantier.id
             `
-        });
+        });*/
 
         const clients = await db.execute({
             sql: "SELECT * FROM client"
@@ -60,7 +76,7 @@ router.get('/chantiers-en-cours', async function(req, res) {
         res.render('listeChantier', {
             chantiersEnCours: chantiersEnCours.rows,
             chantiersArchives: chantiersArchives.rows,
-            clients: clients.rows
+            clients: clients.rows,
         });
     } catch (err) {
         console.error('Database query error:', err);

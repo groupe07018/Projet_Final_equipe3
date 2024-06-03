@@ -1,8 +1,4 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Liste des Chantiers</title>
+
     <style>
         .section {
             display: none;
@@ -34,9 +30,8 @@
             right: 20px;
         }
     </style>
-</head>
-<body>
-    <h1>Liste des Chantiers</h1>
+
+    <h1>Liste des chantiers</h1>
 
     <div class="top-right-buttons">
         <button onclick="location.href='/'">Page principale</button>
@@ -59,7 +54,6 @@
                     <th>Nom du Projet</th>
                     <th>Adresse du Chantier</th>
                     <th>Client</th>
-                    <th>Total Heures</th>
                     <th>Statut</th>
                     <th>Facture</th>
                 </tr>
@@ -69,8 +63,7 @@
                 <tr>
                     <td>{{this.nom_projet}}</td>
                     <td>{{this.adresse_chantier}}</td>
-                    <td>{{this.client_nom}}</td>
-                    <td>{{this.total_heures}}</td>
+                    <td>{{this.nom}}</td>
                     <td>{{this.statut}}</td>
                     <td><button onclick="location.href='/facture/{{this.id}}'">Facture</button></td>
                 </tr>
@@ -87,7 +80,6 @@
                     <th>Nom du Projet</th>
                     <th>Adresse du Chantier</th>
                     <th>Client</th>
-                    <th>Total Heures</th>
                     <th>Statut</th>
                     <th>Facture</th>
                 </tr>
@@ -97,8 +89,7 @@
                 <tr>
                     <td>{{this.nom_projet}}</td>
                     <td>{{this.adresse_chantier}}</td>
-                    <td>{{this.client_nom}}</td>
-                    <td>{{this.total_heures}}</td>
+                    <td>{{this.nom}}</td>
                     <td>{{this.statut}}</td>
                     <td><button onclick="location.href='/facture/{{this.id}}'">Facture</button></td>
                 </tr>
@@ -144,7 +135,6 @@
             }
         }
     </script>
-</body>
-</html>
+
 
 
