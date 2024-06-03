@@ -110,8 +110,8 @@
    document.addEventListener("DOMContentLoaded", loaderFacture)
     function loaderFacture(){
         heureFacturable()
-        const json = document.querySelector("#factureEnregistre").innerHTML
-        if(json == ""){
+        const json = document.querySelector("#factureEnregistre").innerHTML 
+        if(json == ""){ // sert à rien, trouver une alternative
             return
         }
         else
