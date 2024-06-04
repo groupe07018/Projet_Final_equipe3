@@ -1,11 +1,12 @@
 
    
     <div class="contenu">
-         <h4>Liste des Employés titre disparu</h4> <!-- css à faire quand quelque chose s'affichera-->
+         <h4>Liste des Employés</h4> <!-- css à faire quand quelque chose s'affichera-->
         <ul>
             {{#each employees}}
                 <li>{{this.nom}}</li>
             {{/each}}
         </ul>
     </div>
+    <button class="btn btn-danger espace boutonDroite" onclick="location.href='/patron'">Retour au portail principal</button>
 

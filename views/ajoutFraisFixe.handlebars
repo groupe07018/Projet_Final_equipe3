@@ -4,7 +4,6 @@ configurer quelque part --}}
 
 <div class="contenu">
     <form action="/frais_fixe" method="post">
-    <button class="btn btn-primary espace boutonDroite" onclick="location.href='/patron">Retour au portail principal</button>
     <div class="form-group">
         <h4>Personalisation des frais fixes</h4>
         <p>Remplir les champs pour chacun des frais fixes que vous aimeriez être en mesure de facturer à vos clients <br>
@@ -14,7 +13,7 @@ configurer quelque part --}}
         <input class="labelFormulaire" type="text" id="unite_frais_fixe" name="unite_frais_fixe" placeholder="Unite de mesure (ex. chacun, pied carré...)"><br><br>
         {{{message}}}
     </div>
-        <button class="btn btn-primary boutonGauche" type="submit">Ajouter</button>
-        
+        <button class="btn btn-primary boutonGauche" type="submit">Ajouter</button>  
     </form>
+    <button class="btn btn-danger espace boutonDroite" onclick="location.href='/patron'">Retour au portail principal</button>
 </div>
