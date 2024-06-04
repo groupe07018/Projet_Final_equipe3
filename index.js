@@ -79,7 +79,8 @@ app.get('/liste-contracteurs', async (req, res) => {
         if (result.rows.length > 0) {
             res.render("listeContracteurs", { contractors: result.rows });
         } else {
-            res.send('<h2>Aucun contracteur enregistré.'); 
+            res.send(`<h2>Aucun client enregistré.</h2> 
+            <button class="btn btn-danger espace boutonDroite pasImprimer" onclick="location.href='/patron'">Retour au portail principal</button>`); 
         }
     } catch (err) {
         console.error('Database query error: ', err);

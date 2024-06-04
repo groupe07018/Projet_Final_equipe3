@@ -1,31 +1,35 @@
 <div class="contenu">
-    <form action="/ajoutHeure" method="post">
+    <form action="/employe" method="post">
     <div class="form-group">
-        <h4>Punch mobile de {{login}}</h4>
-        <select class="selectFormulaire" name="menu_deroulant" required>
+        <h4>Punch mobile de {{login.login}}</h4>
+        <select class="selectFormulaire" name="id_chantier" id="id_chantier" required>
             <option value="">Sélectionnez un chantier</option>
                 {{#each chantier}}
-                    <option value="{{id}}{{nom_projet}}">{{id}}-  {{nom_projet}}</option>
+                    <option value="{{id}}">{{id}}-  {{nom_projet}}</option>
                 {{/each}}
             </select>
             <br><br>
             <div class="espace">
                 <button class="btn btn-primary" type="button" onclick="heureEntree()">Entrer au travail</button>
                 <input class="espace" type="text" id="heureIn" name="heureIn" placeholder="Heure d'arrivée" readonly> {{heure.in}}
-                <input class="espace" type="number" id="heureInChiffre" name="heureInChiffre" placeholder="pour la BD">{{heureInChiffre}}
+                <input class="espace" type="number" id="heureInChiffre" name="heureInChiffre" hidden placeholder="pour la BD">{{heureInChiffre}}
             </div>
             <div class="espace">
                 <button class="btn btn-dark" type="button" onclick="heureSortie()">Sortir du travail</button>
                 <input class="espace" type="text" id="heureOut" name="heureOut"  placeholder="Heure de fin"readonly> {{heure.out}}
-                <input class="espace" type="number" id="heureOutChiffre" name="heureOutChiffre" placeholder="pour la BD" readonly>{{heureOutChiffre}}
+                <input class="espace" type="number" id="heureOutChiffre" name="heureOutChiffre" hidden placeholder="pour la BD" readonly>{{heureOutChiffre}}
             </div>
+            <input class="espace" value ="{{login.id}}" type="text" id="login" name="login" hidden placeholder="login"> 
+           
         </div>
             <button class="btn btn-primary boutonGauche" type="submit">Ajouter</button>
         </form>
 </div>
 
 
+
 <script>
+
     function heure() {
         let now = new Date();
         let annee = now.getFullYear() + ` `;
