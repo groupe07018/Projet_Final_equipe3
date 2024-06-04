@@ -1,11 +1,11 @@
 <div class="contenu">
-    <form action="/ajoutHeure" method="post">
+    <form action="/employe" method="post">
     <div class="form-group">
-        <h4>Punch mobile de {{login}}</h4>
-        <select class="selectFormulaire" name="menu_deroulant" required>
+        <h4>Punch mobile de {{login.login}}</h4>
+        <select class="selectFormulaire" name="id_chantier" id="id_chantier" required>
             <option value="">Sélectionnez un chantier</option>
                 {{#each chantier}}
-                    <option value="{{id}}{{nom_projet}}">{{id}}-  {{nom_projet}}</option>
+                    <option value="{{id}}">{{id}}-  {{nom_projet}}</option>
                 {{/each}}
             </select>
             <br><br>
@@ -19,13 +19,17 @@
                 <input class="espace" type="text" id="heureOut" name="heureOut"  placeholder="Heure de fin"readonly> {{heure.out}}
                 <input class="espace" type="hidden" id="heureOutChiffre" name="heureOutChiffre" placeholder="pour la BD" readonly>{{heureOutChiffre}}
             </div>
+            <input class="espace" value ="{{login.id}}" type="text" id="login" name="login" hidden placeholder="login"> 
+           
         </div>
             <button class="btn btn-primary boutonGauche" type="submit">Ajouter</button>
         </form>
 </div>
 
 
+
 <script>
+
     function heure() {
         let now = new Date();
         let annee = now.getFullYear() + ` `;
