@@ -21,10 +21,6 @@ router.get('/routerChantier', async function(req,res) {
     res.render('listeChantier');
 });
 
-router.get('/routerFacture', async function(req,res) {
-    res.render('facture');
-});
-
 router.post('/', async (req,res) => {
     // Avoir les informations du formulaire
     const login = req.body.login;
@@ -68,8 +64,8 @@ router.post('/', async (req,res) => {
     );
     if(correct) {
         addInfo(await createSession(res), {login: user.id}); //p-e ajouter une vérification de session au lieu d'en créer une 
-        if (result.rows[0].profil_administrateur===1) { //ça ne marche pas ça
-            res.render("patron", {login});
+        if (result.rows[0].profil_administrateur===1) { 
+            res.redirect("patron");
         }
         else {
             res.redirect("employe"); 

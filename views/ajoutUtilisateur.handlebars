@@ -58,10 +58,12 @@
     <div class="container">
         <form action="/signup" method="POST">
             <div class="form-group">
-                <label for="nom">Nom:</label>
+                <label for="login">Nom:</label>
                 <input type="text" id="login" name="login" required>
-                <label for="nom">Mot de passe:</label>
-                <input type="text" id="mdp" name="mdp" required>
+                <label for="mot_de_passe">Mot de passe:</label>
+                <input type="text" id="mot_de_passe" name="mot_de_passe" required>
+                Est-ce un administrateur?
+                <input type="radio" id="profil_administrateur" name="profil_administrateur" value="1">
             </div>
             <button type="submit">Ajouter</button>
         </form>

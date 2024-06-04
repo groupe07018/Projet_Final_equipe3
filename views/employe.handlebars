@@ -1,30 +1,30 @@
 <form action="/ajoutHeure" method="post">
-<H2>Punch mobile de {{login}}</H2>
-<div class="grid-container">
-    <div class="grid-item-1">
-        <select name="menu_deroulant">
-            <option value="">Sélectionnez un chantier</option>
-            {{#each chantier}}
-                <option value="{{nom_projet}}">{{nom_projet}}</option>
-            {{/each}}
-        </select>
-    </div><br><br><br>
-    <div class="grid-item-1">
-        <button class="btn btn-info" type="button" onclick="heureEntree()">Entrer au travail</button></div>
-    <div class="grid-item-2">
-        <input type="text" id="heureIn" name="heureIn" readonly> {{heure.in}}</div>
-    <div class="grid-item-3">
-        <input type="number" id="heureInChiffre" name="heureInChiffre" readonly>{{heureInChiffre}}</div><br><br><br>
-    <div class="grid-item-1">
+    <H2>Punch mobile de {{login}}</H2>
+
+    <div class="grid-container">
+        <div class="grid-item-1">
+            <select name="menu_deroulant">
+                <option value="">Sélectionnez un chantier</option>
+                {{#each chantier}}
+                    <option value="{{id}}{{nom_projet}}">{{id}}-  {{nom_projet}}</option>
+                {{/each}}
+            </select>
+        </div><br><br><br>
+        <div class="grid-item-1">
+            <button class="btn btn-primary" type="button" onclick="heureEntree()">Entrer au travail</button></div>
+        <div class="grid-item-2">
+            <input type="text" id="heureIn" name="heureIn" readonly> {{heure.in}}</div>
+        <div class="grid-item-3">
+            <input type="number" id="heureInChiffre" name="heureInChiffre" readonly>{{heureInChiffre}}</div><br><br><br>
+        <div class="grid-item-1">
             <button class="btn btn-dark" type="button" onclick="heureSortie()">Sortir du travail</button></div>
         <div class="grid-item-2">
             <input type="text" id="heureOut" name="heureOut" readonly> {{heure.out}}</div>
-            <div class="grid-item-3">
-        <input type="number" id="heureOutChiffre" name="heureOutChiffre" readonly>{{heureOutChiffre}}</div><br><br><br>
-    <div class="grid-item-1">
+        <div class="grid-item-3">
+            <input type="number" id="heureOutChiffre" name="heureOutChiffre" readonly>{{heureOutChiffre}}</div><br><br><br>
+        <div class="grid-item-1">
             <button class="btn btn-success" type="submit">Confirmer</button></div>
     </div>
-</div>
 </form>
 
 <script>
