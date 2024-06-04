@@ -35,8 +35,8 @@
 </div>
 <br>
 
-<!--Pour avoir accès au JSON pour la fonction loaderFacture(), remettre hidden -->
-<p id="factureEnregistre">{{afficherFacture.facture}} 
+<!--Pour avoir accès au JSON pour la fonction loaderFacture() -->
+<p hidden id="factureEnregistre">{{afficherFacture.facture}} 
 </p>
 
  <!--Pour avoir accès au total d'heures pour la fonction heureFacturable() -->
@@ -57,13 +57,12 @@
             <td></td>
             <td></td>
         </tr>
-        <tr>
+        <tr id=>
             <td>Heures facturables</td>
             <td><input type="number" name="tauxHoraire" class="caseQuantite" id="tauxHoraire"  placeholder="requis" required onkeyup="calculHeure()"></td>
             <td><input type="number" name="nombreHeure" class="caseQuantite" id="heureFacturable"  step="0.01" placeholder="requis"  onkeyup="calculHeure()" required ></td>
             <td><span id="afficherSousTotalHeure"></span></td>
         </tr>
-            
 </table>
 <button type="button" class="btn btn-primary pasImprimer" onclick="ajoutLigne()">Ajouter un frais</button>
 <button type="button"class="btn btn-primary boutonDroite pasImprimer" onclick="calculSousTotalFinal()">CALCULER</button>
@@ -112,12 +111,10 @@
         heureFacturable()
         const json = document.querySelector("#factureEnregistre").innerHTML 
         if(json == ""){ // sert à rien, trouver une alternative
-            return
         }
         else
         {
         const obj = JSON.parse(json)
-
         let afficherDate = document.querySelector('#calendrier')
         afficherDate.value = obj.date
 
@@ -132,6 +129,19 @@
         for (let x = 0; x<nombreLigne.length; x++){
             ajoutLigne()
         }
+
+//incapable faire afficher les valeurs de menu_frais_fixe dans la facture enregistée et les autres champs
+        /*let recupLigneMenu = document.getElementsByName("menu_frais_fixe")
+            for (let x of recupLigneMenu){
+                x.value = obj.menu_frais_fixe[0]
+            } // met la même valeur à tous les menus, évidement*/
+
+        /*let recupLigneMenu = document.getElementsByName("menu_frais_fixe")
+            for (let x of obj.menu_frais_fixe){
+                for(let y of recupLigneMenu){
+                    y.value = x[0]
+            }   
+        }*/
     } 
 }
 
@@ -225,7 +235,7 @@ function ajoutLigne(){
     var table = document.querySelector("#tableFacture");
     var row = table.insertRow(-1);
 
-    row.innerHTML = ` <td><select name="menu_frais_fixe" required onchange="afficherPrix(this)">
+    row.innerHTML = `<tr> <td><select name="menu_frais_fixe" required onchange="afficherPrix(this)">
                     <option value="">- Sélectionner -</option>
                     {{#each frais_fixe}}
                         <option value="{{this.prix_frais_fixe}}">{{this.nom_frais_fixe}} {{this.prix_frais_fixe}}$ / {{this.unite_frais_fixe}}</option>
@@ -234,7 +244,7 @@ function ajoutLigne(){
             </td>
             <td></td>
             <td><input defaultValue="0" class="caseQuantite" type="number" id="quantite" name="quantite" required="true" placeholder="requis" onkeyup="calculFraisFixes(this)"></td>
-            <td name="sousTotalFraisFixe"></td>`
+            <td name="sousTotalFraisFixe"></td></tr>`
 }
 
 </script>

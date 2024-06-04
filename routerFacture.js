@@ -23,6 +23,7 @@ router.post('/frais_fixe', async function(req, res){
                     <button type='button' class='btn-close' data-bs-dismiss='alert'></button>Ajout effectué avec succès</div>`})
 })
 
+
 router.get('/facture/:id', async function(req, res){
     const idChantier = req.params.id
     if (!idChantier) {
