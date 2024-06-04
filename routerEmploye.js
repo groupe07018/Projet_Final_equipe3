@@ -30,7 +30,7 @@ router.post('/ajoutHeure', async function(req, res){
     const result = await db.execute ({
         sql: `INSERT INTO horodateur(heure_debut, heure_fin, id_chantier, id_utilisateur)
          VALUES(:heureInChiffre, :heureOutChiffre, :id_chantier, :login)`,
-        args: {heureInChiffre: req.body.heureInChiffre, heureOutChiffre: req.body.heureOutChiffre, id_chantier: req.body.id, login: req.body.login},
+        args: {heureInChiffre, heureOutChiffre, id_chantier: req.body.id, login}
     });
     console.log(result);
     res.redirect("ajoutHeure");
