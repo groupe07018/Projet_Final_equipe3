@@ -3,6 +3,9 @@ const exphbs = require("express-handlebars");
 const router = express.Router();
 const db = require("./db");
 
+router.get("/patron", async function(req,res){
+    res.render('patron');
+})
 
 router.get("/", async function (req,res) {
     const login = req.session.login;
