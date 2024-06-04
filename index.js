@@ -2,6 +2,7 @@ const express = require('express');
 const { engine } = require('express-handlebars');
 const cookieParser = require("cookie-parser");
 const session = require("./sessions");
+const autorisation = require("./autorisation");
 
 
 const db = require("./db");;
@@ -18,8 +19,11 @@ app.use(express.urlencoded({extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 
+//app.use(autorisation.middleware);
+
 // Middleware pour la gestion des sessions (sessions.js)
 app.use(session.middleware);
+
 const routerFacture = require("./routerFacture");
 const routerChantier = require("./routerchantier");
 

@@ -18,7 +18,7 @@ router.get("/", async function (req,res) {
     res.render("employe", {login: nom.rows[0].login, chantier: chantier.rows}); 
 });
 
-router.get('/ajoutHeure', async function(req, res){
+router.post('/ajoutHeure', async function(req, res){
     console.log("allo");
     const idLogin = await db.execute ({
         sql:`SELECT id FROM utilisateur WHERE id= :login`,
