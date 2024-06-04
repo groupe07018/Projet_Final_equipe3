@@ -63,7 +63,7 @@ router.post('/', async (req,res) => {
         user.mot_de_passe,
     );
     if(correct) {
-        addInfo(await createSession(res), {login: user.id}); //p-e ajouter une vérification de session au lieu d'en créer une 
+        addInfo(await createSession(res), {login: user.id}); 
         if (result.rows[0].profil_administrateur===1) { 
             res.redirect("patron");
         }
