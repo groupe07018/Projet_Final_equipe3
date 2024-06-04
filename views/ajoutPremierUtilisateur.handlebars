@@ -1,6 +1,11 @@
-<form action="/ajoutPremierUtilisateur" method="post">
-    <input type="text" name="login" id="login" placeholder="login du premier utilisateur"/>
-    <input type="text" name="mot_de_passe" id="mot_de_passe" placeholder="mot de passe du premier utilisateur"/>
-    <input type="hidden" name="administrateur" id="administrateur" value="1"/>
-    <input type="submit" value="envoyer">
-</form>
+ <div class="contenu">
+    <form action="/ajoutPremierUtilisateur" method="post">
+    <div class="form-group">
+        <h4>Enregistrement du gestionnaire principal</h4>
+        <input class="labelFormulaire" type="text" name="login" id="login" placeholder="Nom d'utilisateur ou courriel"/><br><br>
+        <input class="labelFormulaire" type="text" name="mot_de_passe" id="mot_de_passe" placeholder="Mot de passe"/><br><br>
+        <input type="hidden" name="administrateur" id="administrateur" value="1"/>
+            </div>
+            <button class="btn btn-primary boutonGauche" type="submit">Ajouter</button>
+        </form>
+    </div>

@@ -1,15 +1,20 @@
 {{!-- formulaire pour ajouter des frais fixes pour la facturation, car ils sont différents d'une entreprise à l'autre, on doit pouvoir les
 configurer quelque part --}}
 
-<h1>Personalisation des frais fixes</h1>
-<p>Remplir les champs pour chacun des frais fixes que vous aimeriez être en mesure de facturer à vos clients <br>
-<span class="sousTexte">(ex: frais de déplacement, frais de service minimum...)</span></p>
 
-<form action="/frais_fixe" method="post">
-<input type="text" id="nom_frais_fixe" name="nom_frais_fixe" required placeholder="Nom"><br><br>
-<input type="number" id="prix_frais_fixe" name="prix_frais_fixe" required step="0.01" placeholder="Montant unitaire"><br><br>
-<input type="text" id="unite_frais_fixe" name="unite_frais_fixe" placeholder="Unite de mesure (ex. chacun, pied carré...)"><br><br>
-<button type="submit" class="btn btn-primary">Enregister</button><br><br>
-{{{message}}}
-
- </form>
+<div class="contenu">
+    <form action="/frais_fixe" method="post">
+    <button class="btn btn-primary espace boutonDroite" onclick="location.href='/patron">Retour au portail principal</button>
+    <div class="form-group">
+        <h4>Personalisation des frais fixes</h4>
+        <p>Remplir les champs pour chacun des frais fixes que vous aimeriez être en mesure de facturer à vos clients <br>
+        <span class="sousTexte">(ex: frais de déplacement, frais de service minimum...)</span></p>
+        <input class="labelFormulaire" type="text" id="nom_frais_fixe" name="nom_frais_fixe" required placeholder="Nom"><br><br>
+        <input class="labelFormulaire" type="number" id="prix_frais_fixe" name="prix_frais_fixe" required step="0.01" placeholder="Montant unitaire"><br><br>
+        <input class="labelFormulaire" type="text" id="unite_frais_fixe" name="unite_frais_fixe" placeholder="Unite de mesure (ex. chacun, pied carré...)"><br><br>
+        {{{message}}}
+    </div>
+        <button class="btn btn-primary boutonGauche" type="submit">Ajouter</button>
+        
+    </form>
+</div>

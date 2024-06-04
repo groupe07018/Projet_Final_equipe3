@@ -1,31 +1,29 @@
-<form action="/ajoutHeure" method="post">
-    <H2>Punch mobile de {{login}}</H2>
-
-    <div class="grid-container">
-        <div class="grid-item-1">
-            <select name="menu_deroulant">
-                <option value="">Sélectionnez un chantier</option>
+<div class="contenu">
+    <form action="/ajoutHeure" method="post">
+    <div class="form-group">
+        <h4>Punch mobile de {{login}}</h4>
+        <select class="selectFormulaire" name="menu_deroulant" required>
+            <option value="">Sélectionnez un chantier</option>
                 {{#each chantier}}
                     <option value="{{id}}{{nom_projet}}">{{id}}-  {{nom_projet}}</option>
                 {{/each}}
             </select>
-        </div><br><br><br>
-        <div class="grid-item-1">
-            <button class="btn btn-primary" type="button" onclick="heureEntree()">Entrer au travail</button></div>
-        <div class="grid-item-2">
-            <input type="text" id="heureIn" name="heureIn" readonly> {{heure.in}}</div>
-        <div class="grid-item-3">
-            <input type="number" id="heureInChiffre" name="heureInChiffre" readonly>{{heureInChiffre}}</div><br><br><br>
-        <div class="grid-item-1">
-            <button class="btn btn-dark" type="button" onclick="heureSortie()">Sortir du travail</button></div>
-        <div class="grid-item-2">
-            <input type="text" id="heureOut" name="heureOut" readonly> {{heure.out}}</div>
-        <div class="grid-item-3">
-            <input type="number" id="heureOutChiffre" name="heureOutChiffre" readonly>{{heureOutChiffre}}</div><br><br><br>
-        <div class="grid-item-1">
-            <button class="btn btn-success" type="submit">Confirmer</button></div>
-    </div>
-</form>
+            <br><br>
+            <div class="espace">
+                <button class="btn btn-primary" type="button" onclick="heureEntree()">Entrer au travail</button>
+                <input class="espace" type="text" id="heureIn" name="heureIn" placeholder="Heure d'arrivée" readonly> {{heure.in}}
+                <input class="espace" type="number" id="heureInChiffre" name="heureInChiffre" placeholder="pour la BD">{{heureInChiffre}}
+            </div>
+            <div class="espace">
+                <button class="btn btn-dark" type="button" onclick="heureSortie()">Sortir du travail</button>
+                <input class="espace" type="text" id="heureOut" name="heureOut"  placeholder="Heure de fin"readonly> {{heure.out}}
+                <input class="espace" type="number" id="heureOutChiffre" name="heureOutChiffre" placeholder="pour la BD" readonly>{{heureOutChiffre}}
+            </div>
+        </div>
+            <button class="btn btn-primary boutonGauche" type="submit">Ajouter</button>
+        </form>
+</div>
+
 
 <script>
     function heure() {

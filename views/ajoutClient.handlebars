@@ -1,91 +1,14 @@
 {{!-- formulaire d'ajout de client. Le client peut être un particulier directement ou un entrepreneur général
 C'est différent du formulaire d'ajout de chantier car un entrepreneur général pourrait avoir plusieurs chantiers --}}
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .form-container {
-            background: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-            width: 300px;
-        }
-        h1 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        form {
-            display: flex;
-            flex-direction: column;
-        }
-        label {
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        input[type="text"],
-        input[type="email"],
-        input[type="text"] {
-            margin-bottom: 10px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        select {
-            margin-bottom: 10px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        button {
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        a {
-            display: inline-block;
-            margin-top: 10px;
-            color: #007BFF;
-            text-decoration: none;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-    </style>
-</head>
-
-
-<body>
-    <h1>Ajouter un Nouveau Client</h1>
+ <div class="contenu">
+  
     <form action="/ajoutclient" method="POST">
-        <label for="nom">Nom:</label>
-        <input type="text" id="nom" name="nom" required><br>
-
-        <label for="courriel">Courriel:</label>
-        <input type="email" id="courriel" name="courriel" required><br>
-
-        <label for="adresse_client">Adresse:</label>
-        <input type="text" id="adresse_client" name="adresse_client" required><br>
-
-        <button type="submit">Ajouter</button>
+    <h4>Ajouter un nouveau client</h4>
+        <div class="form-group">
+            <input class="labelFormulaire" type="text" id="nom" name="nom" placeholder="Nom" required><br><br>
+            <input class="labelFormulaire" type="email" id="courriel" name="courriel" placeholder="Courriel"><br><br>
+            <input class="labelFormulaire" type="text" id="adresse_client" name="adresse_client" placeholder="Adresse"><br><br>
+        </div>
+        <button class="btn btn-primary boutonGauche" type="submit">Ajouter</button>
     </form>
-</body>
-</html>
+</div>

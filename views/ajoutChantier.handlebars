@@ -1,96 +1,25 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Ajouter un Nouveau Chantier</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .form-container {
-            background: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-            width: 300px;
-        }
-        h1 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        form {
-            display: flex;
-            flex-direction: column;
-        }
-        label {
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        input[type="text"],
-        input[type="date"],
-        select {
-            margin-bottom: 10px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        button {
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        a {
-            display: inline-block;
-            margin-top: 10px;
-            color: #007BFF;
-            text-decoration: none;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-    </style>
-</head>
-
-
-
-
-<body>
-    <h1>Ajouter un Nouveau Chantier</h1>
+  <div class="contenu">
     <form action="/ajoutchantier" method="POST">
-        <label for="nom_projet">Nom du Projet:</label>
-        <input type="text" id="nom_projet" name="nom_projet" required><br>
+    <h4>Ajouter un chantier</h4>
+        <div class="form-group">
+            <input type="text" class="labelFormulaire" id="nom_projet" name="nom_projet" placeholder="Nom du projet" required><br><br>
+            <input type="text" class="labelFormulaire" id="adresse_chantier" name="adresse_chantier" placeholder="Adresse du chantier" required><br><br>
 
-        <label for="adresse_chantier">Adresse du Chantier:</label>
-        <input type="text" id="adresse_chantier" name="adresse_chantier" required><br>
+            <label for="client">Client: </label>
+            <select id="client" class="selectFormulaire" name="client" required>
+                <option value = "">-Sélectionner-</option>
+                {{#each clients}}
+                    <option value="{{this.id}}">{{this.nom}}</option>
+                {{/each}}
+            </select><br><br>
 
-        <label for="client">Client:</label>
-        <select id="client" name="client" required>
-            {{#each clients}}
-                <option value="{{this.id}}">{{this.nom}}</option>
-            {{/each}}
-        </select><br>
-
-        <label for="statut">Statut:</label>
-        <select id="statut" name="statut" required>
-            <option value="actif">Actif</option>
-            <option value="inactif">Inactif</option>
-        </select><br>
-
-        <button type="submit">Ajouter</button>
+            <label for="statut">Statut: </label>
+            <select id="statut" name="statut" class="selectFormulaire" required>
+                <option value = "">-Sélectionner-</option>
+                <option value="actif">Actif</option>
+                <option value="inactif">Inactif</option>
+            </select><br>
+        </div>
+             <button class="btn btn-primary boutonGauche" type="submit">Ajouter</button>
     </form>
-</body>
-</html>
+</div>

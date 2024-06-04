@@ -1,6 +1,16 @@
-body{
-    font-family:Verdana, Geneva, Tahoma, sans-serif;
-  }
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+.nav-link{
+    color:black;
+}
+h4 {
+    color: #333;
+}
 .contenu{
     width: 80%;
     margin:auto;
@@ -69,7 +79,7 @@ body{
 } 
 /*bouton pour accepter*/
 .btn-primary{
-    background-color: #5EAAA8;
+    background-color: #417b79;
     border: 1px solid black;
 }
 .btn-primary:hover{
@@ -89,5 +99,87 @@ body{
 }
 .boutonDroite{
     float:right;
+}
+/*style des boutons de la page patron*/
+.button-container {
+    margin-top: 20px;
+}
+.button-container button {
+    width: 350px;
+    margin: 5px;
+    padding:  20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #417b79;
+    border: 1px solid black;
+    color: white;
+    transition: background-color 0.3s;
+}
+.button-container button:hover {
+    background-color: #A3D2CA;
+}
+
+.button-container-orange button {
+    width: 350px;
+    margin: 5px;
+    padding:  20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #DB6400;
+    border: 1px solid black;
+    color: white;
+    transition: background-color 0.3s;
+}
+.button-container-orange button:hover {
+    background-color:  #db3700 ;
+}
+
+form {
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+.labelFormulaire{
+    width: 300px;
+    padding: 5px;
+    margin-left: 20px;
+    border:1px solid gray;
+    border-radius:5px;
+}
+.selectFormulaire{
+    width: 250px;
+    padding: 5px;
+    margin-left: 20px;
+    border:1px solid gray;
+    border-radius:5px;
+}
+.form-group {
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+}
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+li {
+    background: #fff;
+    margin: 10px 0;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+}
+.espace{
+    margin: 20px;
+
 }
 
