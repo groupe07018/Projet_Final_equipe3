@@ -47,7 +47,7 @@ app.get('/liste-employes', async (req, res) => {
             sql: "SELECT * FROM utilisateur"
         });
 
-        console.log('Query result:', result.rows);
+        ('Query result:', result.rows);
 
         if (result.rows.length > 0) {
             res.render("listeEmployes", { employees: result.rows });
@@ -65,14 +65,14 @@ app.get('/nouvel-employe', (req, res) => {
     res.render('ajoutUtilisateur'); 
 });
 
-
+//pour la page patron
 app.get('/liste-contracteurs', async (req, res) => {
     try {
         const result = await db.execute({
             sql: "SELECT nom, courriel, adresse_client FROM client"
         });
 
-        console.log('Query result:', result.rows);
+        ('Query result:', result.rows);
 
         if (result.rows.length > 0) {
             res.render("listeContracteurs", { contractors: result.rows });
@@ -118,7 +118,6 @@ app.post('/nouveau-contracteur', async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
-
 
 
 app.get('/chantiers-en-cours', (req, res) => {

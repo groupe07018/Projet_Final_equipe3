@@ -6,9 +6,15 @@ module.exports = {
 
         // S'il n'y a pas d'id de session, ne pas aller chercher les info
         if(!session) {
-            next();
+            if(req.url=="/" || req.url=="/login" || req.url=="/signup/ajoutPremierUtilisateur") {
+                next();
+                return;
+            };
+            res.redirect("/");
             return;
         }
+            
+        
 
         // Prendre les informations de la base de données
         const result = await db.execute({
