@@ -5,21 +5,6 @@ const { createSession, addInfo } = require("../sessions");
 
 const router = express.Router();
 
-router.get('/', async function (req,res) {
-    res.render('index');
-});
-
-router.get('/routerEmploye', async function(req,res) {
-    res.render('employe');
-});
-
-router.get('/routerPatron', async function(req,res) {
-    res.render('patron');
-});
-
-router.get('/routerChantier', async function(req,res) {
-    res.render('listeChantier');
-});
 
 router.post('/', async (req,res) => {
     // Avoir les informations du formulaire
@@ -34,7 +19,7 @@ router.post('/', async (req,res) => {
     const {rows} = await db.execute("SELECT * FROM utilisateur");
 
         if (rows.length === 0) {
-            res.redirect("signup/ajoutPremierUtilisateur");
+            res.redirect("/signup/ajoutPremierUtilisateur");
             return;
         }
 
