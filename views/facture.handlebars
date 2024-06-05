@@ -28,7 +28,7 @@
     <div class="grid-item-6">
         <strong>Travaux effectués au:</strong><br>
         {{#each chantier}}
-            {{chantier.nom_projet}}<br>
+            {{this.nom_projet}}<br>
             {{this.adresse_chantier}}
         {{/each}}
     </div>
@@ -111,7 +111,7 @@
     function loaderFacture(){
         heureFacturable()
         const json = document.querySelector("#factureEnregistre").innerHTML 
-        if(json == ""){ // sert à rien, trouver une alternative
+        if(json == ""){
         }
         else
         {
@@ -131,18 +131,19 @@
             ajoutLigne()
         }
 
-//incapable faire afficher les valeurs de menu_frais_fixe dans la facture enregistée et les autres champs
-        /*let recupLigneMenu = document.getElementsByName("menu_frais_fixe")
-            for (let x of recupLigneMenu){
-                x.value = obj.menu_frais_fixe[0]
-            } // met la même valeur à tous les menus, évidement*/
+        let recupLigneMenu = document.getElementsByName("menu_frais_fixe")
+        let sousTotalFraisFixe = document.getElementsByName("sousTotalFraisFixe")
+        let recupQuantite = document.getElementsByName("quantite")
 
-        /*let recupLigneMenu = document.getElementsByName("menu_frais_fixe")
-            for (let x of obj.menu_frais_fixe){
-                for(let y of recupLigneMenu){
-                    y.value = x[0]
-            }   
-        }*/
+            for (let x = 0; x<recupLigneMenu.length; x++){
+                recupLigneMenu[x].value = obj.menu_frais_fixe[x]  
+                afficherPrix(recupLigneMenu[x]) 
+            }
+        
+            for (let y = 0; y< recupQuantite.length; y++){
+                recupQuantite[y].value = obj.quantite[y]
+                calculFraisFixes(recupQuantite[y])
+            }
     } 
 }
 
@@ -164,6 +165,7 @@ function Recup_select_info(menu, selection){
     let frereMenu = parentMenu.nextElementSibling 
     valeur_prix = Number(valeur_prix)
     frereMenu.innerHTML= valeur_prix.toFixed(2)
+    return valeur_prix
 }
 
 function heureFacturable(){
@@ -245,6 +247,6 @@ function ajoutLigne(){
             </td>
             <td></td>
             <td><input defaultValue="0" class="caseQuantite" type="number" id="quantite" name="quantite" required="true" placeholder="requis" onkeyup="calculFraisFixes(this)"></td>
-            <td name="sousTotalFraisFixe"></td></tr>`
+            <td name="sousTotalFraisFixe">0.00</td></tr>`
 }
 </script>
