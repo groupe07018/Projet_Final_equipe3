@@ -81,7 +81,7 @@ router.post('/factureRemplie', autorisation, async function(req, res){
         WHERE id = :id`,
         args:{id:idFacture}
 })
-    res.redirect("chantiers-en-cours")// changer le render pour patron quand elle fonctionne
+    res.redirect("chantiers-en-cours")
 })
 
 

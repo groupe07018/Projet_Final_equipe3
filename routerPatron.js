@@ -4,10 +4,6 @@ const router = express.Router();
 const db = require("./db");
 const autorisation = require("./autorisation");
 
-/*router.get("/patron", autorisation, async function(req,res){
-    res.render('patron');
-})*/
-
 router.get("/", autorisation, async function (req,res) {
     const login = req.session.login;
     const nom = await db.execute({sql:"SELECT login FROM utilisateur WHERE id= :login",

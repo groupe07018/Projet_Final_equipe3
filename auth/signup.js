@@ -63,7 +63,7 @@ router.post("/", async function(req,res) {
 
     // Valider que l'utilisateur n'existe pas déjà
     const result = await db.execute({
-        sql:"SELECT 1 FROM utilisateur WHERE login = :login",   // est-ce que le 1 est une erreur
+        sql:"SELECT 1 FROM utilisateur WHERE login = :login",  
         args: {login},
     });
 
