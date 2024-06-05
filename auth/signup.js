@@ -5,11 +5,24 @@ const db = require("../db");
 const router = express.Router();
 
 //Pour créer le premier utilisateur
-router.get ("/ajoutPremierUtilisateur", (req,res) => {
+router.get ("/ajoutPremierUtilisateur", async (req,res) => {
+    const {rows} = await db.execute("SELECT * FROM utilisateur");
+
+        if (rows.length > 0) {
+            res.redirect("/");
+            return;
+        }
     res.render("ajoutPremierUtilisateur");   
 });
 
+
 router.post ("/ajoutPremierUtilisateur", async (req,res) => {
+    const {rows} = await db.execute("SELECT * FROM utilisateur");
+
+        if (rows.length > 0) {
+            res.redirect("/");
+            return;
+        }
     // Aller chercher les informations du formulaire
     const login = req.body.login;
     const password = req.body.mot_de_passe;
