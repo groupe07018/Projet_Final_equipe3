@@ -34,8 +34,7 @@ router.post('/', async (req,res) => {
     const {rows} = await db.execute("SELECT * FROM utilisateur");
 
         if (rows.length === 0) {
-            console.log("Vous êtes le premier utilisateur, veuillez entrer vos informations") 
-            res.redirect("ajoutPremierUtilisateur");
+            res.redirect("signup/ajoutPremierUtilisateur");
             return;
         }
 
@@ -63,7 +62,7 @@ router.post('/', async (req,res) => {
         user.mot_de_passe,
     );
     if(correct) {
-        addInfo(await createSession(res), {login: user.id}); //p-e ajouter une vérification de session au lieu d'en créer une 
+        addInfo(await createSession(res), {login: user.id});
         if (result.rows[0].profil_administrateur===1) { 
             res.redirect("patron");
         }

@@ -19,7 +19,6 @@ app.use(express.urlencoded({extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 
-//app.use(autorisation.middleware);
 
 // Middleware pour la gestion des sessions (sessions.js)
 app.use(session.middleware);
@@ -31,7 +30,6 @@ app.use('/', routerFacture);
 app.use('/', routerChantier);
 // Routeurs
 app.use("/signup", require("./auth/signup"));
-app.use("/ajoutPremierUtilisateur", require("./auth/signup"));
 app.use("/login", require("./auth/login"));
 app.use('/employe', require('./routerEmploye'));
 app.use('/patron', require('./routerPatron'));

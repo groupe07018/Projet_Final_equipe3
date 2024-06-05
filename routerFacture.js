@@ -1,13 +1,14 @@
 const express = require('express');
 const router = express.Router();
-
 const db = require("./db")
+const autorisation = require("./autorisation");
 router.use(express.json())
-router.get('/ajoutFraisFixe', function(req, res){
+
+router.get('/ajoutFraisFixe', autorisation, function(req, res){
     res.render('ajoutFraisFixe')
 })
 
-router.post('/frais_fixe', async function(req, res){
+router.post('/frais_fixe', autorisation, async function(req, res){
     const {nom_frais_fixe, prix_frais_fixe, unite_frais_fixe} = req.body
     if (!nom_frais_fixe || !prix_frais_fixe || !unite_frais_fixe) { 
         res.status(403).send(`Erreur - informations manquantes <br><br>
@@ -24,7 +25,7 @@ router.post('/frais_fixe', async function(req, res){
 })
 
 
-router.get('/facture/:id', async function(req, res){
+router.get('/facture/:id', autorisation, async function(req, res){
     const idChantier = req.params.id
     if (!idChantier) {
         res.redirect("Aucun chantier trouvé")
@@ -59,7 +60,7 @@ router.get('/facture/:id', async function(req, res){
 })
 
 //pour enregister les informations de la facture
-router.post('/factureRemplie', async function(req, res){
+router.post('/factureRemplie', autorisation, async function(req, res){
     const resultat = req.body
     const idFacture = req.body.idChantier
     if (!resultat || !idFacture) { 

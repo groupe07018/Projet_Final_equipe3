@@ -5,7 +5,7 @@ const db = require("../db");
 const router = express.Router();
 
 //Pour créer le premier utilisateur
-router.get ("/", (req,res) => {
+router.get ("/ajoutPremierUtilisateur", (req,res) => {
     res.render("ajoutPremierUtilisateur");   
 });
 
@@ -14,7 +14,7 @@ router.post ("/ajoutPremierUtilisateur", async (req,res) => {
     const login = req.body.login;
     const password = req.body.mot_de_passe;
     const administrateur = req.body.administrateur;
-    console.log("Profil admin: ", administrateur)
+   
     // Créer le salt et hacher le mot de passe
     const salt = randomBytes(16).toString("hex");
     const hashedPass = scryptSync(password, salt, 64);
@@ -22,13 +22,13 @@ router.post ("/ajoutPremierUtilisateur", async (req,res) => {
     // Ajouter l'utilisateur à la base de données
     db.execute({
         sql: `INSERT INTO utilisateur (login, mot_de_passe, salt, profil_administrateur)
-         VALUES (?, ?, ?, ?`, 
+         VALUES (?, ?, ?, ?)`, 
         args: [
             login,
             hashedPass,
             salt,
-            administrateur,
-        ],
+            1
+        ]
     });
     
      res.redirect("/"); 
@@ -42,6 +42,7 @@ router.post("/", async function(req,res) {
     // Aller chercher les informations du formulaire
     const login = req.body.login;
     const password = req.body.mot_de_passe;
+    const admin = req.body.profil_administrateur;
     if (!login || !password) {
         res.redirect(400,"/"); 
         return;
@@ -64,11 +65,13 @@ router.post("/", async function(req,res) {
 
     // Ajouter l'utilisateur à la base de données
     db.execute({
-        sql: "INSERT INTO utilisateur (login, mot_de_passe, salt) VALUES (:login, :hashedPass, :salt)",
+        sql: `INSERT INTO utilisateur (login, mot_de_passe, salt, profil_administrateur)
+         VALUES (:login, :hashedPass, :salt, :profil_administrateur)`,
         args: {
             login,
             hashedPass,
             salt,
+            profil_administrateur: admin
         },
     });
     

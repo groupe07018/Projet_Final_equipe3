@@ -5,9 +5,10 @@
 const express = require('express');
 const router = express.Router();
 const db = require("./db");
+const autorisation = require("./autorisation");
 
 // Route pour afficher la liste des chantiers
-router.get('/chantiers-en-cours', async function(req, res) {
+router.get('/chantiers-en-cours', autorisation, async function(req, res) {
     try {
         const chantiersEnCours = await db.execute(
             `SELECT ch.*, cl.*
@@ -41,12 +42,12 @@ router.get('/chantiers-en-cours', async function(req, res) {
 });
 
 // Route pour afficher le formulaire d'ajout de client
-router.get('/ajoutClient', async function(req, res) {
+router.get('/ajoutClient', autorisation, async function(req, res) {
     res.render('ajoutClient');
 });
 
 // Route pour afficher le formulaire d'ajout de chantier
-router.get('/ajoutChantier', async function(req, res) {
+router.get('/ajoutChantier', autorisation, async function(req, res) {
     try {
         const clients = await db.execute({ sql: 'SELECT * FROM client' });
         res.render('ajoutChantier', { clients: clients.rows });
@@ -57,7 +58,7 @@ router.get('/ajoutChantier', async function(req, res) {
 });
 
 // Route pour ajouter un nouveau client
-router.post('/ajoutclient', async function(req, res) {
+router.post('/ajoutclient', autorisation, async function(req, res) {
     const { nom, courriel, adresse_client } = req.body;
     try {
         await db.execute({
@@ -72,7 +73,7 @@ router.post('/ajoutclient', async function(req, res) {
 });
 
 // Route pour ajouter un nouveau chantier
-router.post('/ajoutchantier', async function(req, res) {
+router.post('/ajoutchantier', autorisation, async function(req, res) {
     const { nom_projet, adresse_chantier, client, statut } = req.body;
     try {
         console.log("Données reçues pour l'ajout du chantier:", req.body);

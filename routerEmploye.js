@@ -16,7 +16,6 @@ router.get("/", async function (req,res) {
 
 router.post('/', async function (req, res){
     const {heureInChiffre, heureOutChiffre, id_chantier, login} = req.body
-    console.log(id_chantier)
     if (!heureInChiffre || !heureOutChiffre || !id_chantier || !login) { 
         res.status(403).send(`Erreur - informations manquantes <br><br>
             <a href=/employe><button type='button'>Retour au formulaire</button></a>`)
