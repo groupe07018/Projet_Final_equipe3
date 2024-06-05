@@ -107,6 +107,7 @@
 <button class="btn btn-danger espace boutonDroite pasImprimer" onclick="location.href='/patron'">Retour au portail principal</button>
 <script>
 
+// pour afficher les information au chargement de la facture (si le chantier a une facture enregistrée)
    document.addEventListener("DOMContentLoaded", loaderFacture)
     function loaderFacture(){
         heureFacturable()
@@ -150,6 +151,7 @@
 var sousTotalHeure = 0; //utilisé pour le calcul final
 var sousTotalFrais =0 // utilisé pour le calcul final
 
+// pour récupérer la sélection dans le menu de frais
 function Recup_select_info(menu, selection){
     var index = menu.selectedIndex;
 
@@ -159,6 +161,7 @@ function Recup_select_info(menu, selection){
         return index;}
 }
  
+ //pour afficher dans la colonne Taux le prix du frais sélectionné
  function afficherPrix(menu){
     let valeur_prix = Recup_select_info(menu,'valeur');
     let parentMenu = menu.parentElement
@@ -168,6 +171,7 @@ function Recup_select_info(menu, selection){
     return valeur_prix
 }
 
+//pour afficher le total d'heures travaillées sur ce chantier
 function heureFacturable(){
     let total = Number(document.querySelector("#afficherHeureFacturable").innerHTML)
     total = (total / 3600000).toFixed(2);
@@ -175,6 +179,7 @@ function heureFacturable(){
 
 }
 
+//pour calculer le total des heures (nombre d'heures * taux)
 function calculHeure(){
     document.querySelector("#tableTotal").hidden = true
     document.querySelector("#boutonEnregistrer").hidden = true
@@ -191,6 +196,7 @@ function calculHeure(){
     sousTotalHeure = totalHeure
 } 
 
+// pour calculer le sous-total de chaque frais fixe (valeur de selection du menu (inscrite dans colonne Taux) * Quantité)
 function calculFraisFixes(quantite){
     document.querySelector("#tableTotal").hidden = true
     document.querySelector("#boutonEnregistrer").hidden = true
@@ -202,6 +208,7 @@ function calculFraisFixes(quantite){
     afficherSousTotal.innerHTML = sousTotal
 }
 
+// pour aller chercher le total de tous les frais fixes
 function calculTotalFraisFixe(){
     let recupTotaux = document.getElementsByName("sousTotalFraisFixe")
     for(let x of recupTotaux){
@@ -211,6 +218,7 @@ function calculTotalFraisFixe(){
      console.log(sousTotalFrais)
 }
 
+//additionner le total des heures avec le total des frais fixes
 function calculSousTotalFinal(){
     calculTotalFraisFixe()
     afficherSousTotalFinal = document.querySelector("#sousTotalFinal")
@@ -223,6 +231,7 @@ function calculSousTotalFinal(){
     document.querySelector("#boutonImprimer").hidden = false
 }
 
+// ajouter les taxes au sous total final
 function calculTaxe(x){
     let tps = document.querySelector("#tps")
     let tvq = document.querySelector("#tvq")
@@ -234,6 +243,7 @@ function calculTaxe(x){
     afficherTotalFinal.innerHTML = montantTxIn
 }
 
+// ajouter une ligne quand on clique sur le bouton Ajouter un frais ou générer des lignes si la facture a déjà été enregistrée
 function ajoutLigne(){
     var table = document.querySelector("#tableFacture");
     var row = table.insertRow(-1);

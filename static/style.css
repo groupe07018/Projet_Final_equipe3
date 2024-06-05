@@ -100,7 +100,7 @@ h4 {
 .boutonDroite{
     float:right;
 }
-/*style des boutons de la page patron*/
+/*style des boutons de la page patron et chantier*/
 .button-container {
     margin-top: 20px;
 }
@@ -180,6 +180,5 @@ li {
 }
 .espace{
     margin: 20px;
-
 }
 
