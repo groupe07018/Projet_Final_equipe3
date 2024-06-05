@@ -126,34 +126,6 @@ app.get('/chantiers-en-cours', (req, res) => {
 });
 
 
-
-
-app.post('/login', async function(req, res) {
-    const login = req.body.userLogin;
-    const mdp = req.body.MDP;
-
-    if (login.length === 0 || mdp.length === 0) {
-        res.redirect('/');
-        return;
-    }
-
-    try {
-        const result = await db.execute({
-            sql: "SELECT * FROM utilisateur WHERE login = ? AND mot_de_passe = ?",
-            args: [login, mdp]
-        });
-
-        if (result.rows.length > 0) {
-            res.redirect('/chantiers-en-cours'); // redirige vers la page de gestion des chantiers en cas de succès
-        } else {
-            res.redirect('/');
-        }
-    } catch (err) {
-        console.error("Erreur", err);
-        res.status(500).send("Erreur dans la base de données interne");
-    }
-});
-
 app.listen(3000, function() {
     console.log("Fonctionne");
 });
