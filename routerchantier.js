@@ -76,7 +76,6 @@ router.post('/ajoutclient', autorisation, async function(req, res) {
 router.post('/ajoutchantier', autorisation, async function(req, res) {
     const { nom_projet, adresse_chantier, client, statut } = req.body;
     try {
-        console.log("Données reçues pour l'ajout du chantier:", req.body);
 
         // Vérification des données reçues
         if (!nom_projet || !adresse_chantier || !client || !statut) {
@@ -87,10 +86,10 @@ router.post('/ajoutchantier', autorisation, async function(req, res) {
             sql: 'INSERT INTO chantier (nom_projet, adresse_chantier, id_client, statut) VALUES (?, ?, ?, ?)',
             args: [nom_projet, adresse_chantier, client, statut]
         });
-        console.log("Chantier ajouté avec succès:", result);
+        
         res.redirect('/chantiers-en-cours');
     } catch (err) {
-        console.error('Erreur lors de l\'insertion dans la base de données:', err.message);
+        
         res.status(500).send('Erreur interne du serveur');
     }
 });

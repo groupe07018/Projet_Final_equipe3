@@ -30,7 +30,7 @@ router.post('/', async (req,res) => {
     const {rows} = await db.execute("SELECT * FROM utilisateur");
 
         if (rows.length === 0) {
-            console.log("Vous êtes le premier utilisateur, veuillez entrer vos informations") 
+            ("Vous êtes le premier utilisateur, veuillez entrer vos informations") 
             res.redirect("ajoutPremierUtilisateur");
             return;
         }
